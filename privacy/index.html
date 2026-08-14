@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myth Notch — Legal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F5F1;
+    --paper-raised:#FFFFFF;
+    --ink:#1B2023;
+    --ink-soft:#4B535A;
+    --ink-faint:#868D93;
+    --accent:#2E6F63;
+    --accent-deep:#1F4F46;
+    --accent-soft:#E4EEEC;
+    --warn:#9A5B22;
+    --warn-soft:#F6EBDD;
+    --line:#DEDAD1;
+    --mark:#F4DD9A;
+    --radius:10px;
+    --sidebar-w:300px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Hanken Grotesk', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Lora', serif;
+    font-weight:600;
+    color:var(--ink);
+    line-height:1.28;
+  }
+
+  a{color:var(--accent-deep);}
+  a:hover{color:var(--accent);}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; gap:16px;
+    padding:14px 20px;
+    background:rgba(246,245,241,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Lora', serif; font-weight:700; font-size:17px;
+    color:var(--ink); text-decoration:none; white-space:nowrap;
+  }
+  .seal{width:30px;height:30px;flex:0 0 auto;}
+  .topbar-spacer{flex:1;}
+
+  .doc-tabs{
+    display:flex; gap:4px; background:var(--accent-soft);
+    padding:4px; border-radius:999px;
+  }
+  .doc-tab{
+    appearance:none; border:none; background:transparent;
+    padding:8px 16px; border-radius:999px;
+    font-family:'Hanken Grotesk',sans-serif; font-weight:600; font-size:13.5px;
+    color:var(--accent-deep); cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+    white-space:nowrap;
+  }
+  .doc-tab[aria-selected="true"]{background:var(--accent); color:#fff;}
+  .doc-tab:focus-visible, .lang-btn:focus-visible, button:focus-visible, select:focus-visible{
+    outline:2px solid var(--accent-deep); outline-offset:2px;
+  }
+
+  .lang-switch{position:relative;}
+  .lang-btn{
+    display:flex; align-items:center; gap:8px;
+    appearance:none; border:1px solid var(--line); background:var(--paper-raised);
+    padding:8px 12px; border-radius:999px; cursor:pointer;
+    font-family:'Hanken Grotesk',sans-serif; font-weight:600; font-size:13.5px; color:var(--ink);
+  }
+  .lang-btn svg{width:14px;height:14px; transition:transform .15s ease;}
+  .lang-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
+  .lang-menu{
+    position:absolute; right:0; top:calc(100% + 6px);
+    background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:10px; box-shadow:0 10px 30px rgba(27,32,35,0.12);
+    min-width:170px; padding:6px; display:none; flex-direction:column;
+  }
+  .lang-menu.open{display:flex;}
+  .lang-option{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:9px 10px; border-radius:7px; cursor:pointer;
+    font-size:14px; font-weight:500; color:var(--ink); background:transparent; border:none;
+    font-family:'Hanken Grotesk',sans-serif; text-align:left; width:100%;
+  }
+  .lang-option:hover{background:var(--accent-soft);}
+  .lang-option[aria-checked="true"]{color:var(--accent-deep); font-weight:700;}
+  .lang-option .check{opacity:0; width:14px; height:14px;}
+  .lang-option[aria-checked="true"] .check{opacity:1;}
+  .lang-option .native{color:var(--ink-faint); font-weight:500; font-size:12.5px;}
+
+  /* ---------- Layout ---------- */
+  .shell{
+    display:grid;
+    grid-template-columns:var(--sidebar-w) minmax(0,1fr);
+    max-width:1180px; margin:0 auto;
+    gap:0;
+  }
+  .sidebar{
+    padding:28px 20px 60px 20px;
+    border-right:1px solid var(--line);
+    align-self:start; position:sticky; top:63px;
+    max-height:calc(100vh - 63px); overflow-y:auto;
+  }
+  .sidebar-block + .sidebar-block{margin-top:26px;}
+  .sidebar-label{
+    font-size:11px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--ink-faint); font-weight:700; margin:0 0 10px 2px;
+  }
+  .meta-card{
+    background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:var(--radius); padding:14px 16px; font-size:13px; color:var(--ink-soft);
+  }
+  .meta-card div + div{margin-top:6px;}
+  .meta-card b{color:var(--ink); font-weight:600;}
+
+  .toc{list-style:none; margin:0; padding:0;}
+  .toc li{margin:0;}
+  .toc a{
+    display:block; padding:7px 10px; margin:1px 0;
+    border-radius:7px; font-size:13.5px; color:var(--ink-soft);
+    text-decoration:none; border-left:2px solid transparent;
+  }
+  .toc a:hover{background:var(--accent-soft); color:var(--accent-deep);}
+  .toc a.active{color:var(--accent-deep); font-weight:700; border-left-color:var(--accent); background:var(--accent-soft);}
+
+  main{padding:44px 40px 120px 40px; min-width:0;}
+  .doc-content{display:none;}
+  .doc-content.active{display:block;}
+
+  .doc-hero h1{font-size:34px; margin:0 0 6px 0;}
+  .doc-hero .tagline{color:var(--ink-soft); font-size:15.5px; margin:0 0 22px 0; max-width:60ch;}
+  .doc-hero hr{border:none; border-top:1px solid var(--line); margin:26px 0 30px 0;}
+
+  section.legal-section{margin:0 0 34px 0; scroll-margin-top:80px;}
+  section.legal-section h2{
+    font-size:22px; margin:0 0 14px 0; padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:baseline; gap:10px;
+  }
+  section.legal-section h3{font-size:16.5px; margin:22px 0 8px 0; color:var(--accent-deep);}
+  section.legal-section p{margin:0 0 13px 0; color:var(--ink);}
+  section.legal-section ul, section.legal-section ol{margin:0 0 13px 0; padding-left:22px;}
+  section.legal-section li{margin:0 0 7px 0;}
+  section.legal-section li:last-child{margin-bottom:0;}
+  .short-version{
+    background:var(--accent-soft); border:1px solid #cfe3df; border-radius:var(--radius);
+    padding:18px 20px; margin-bottom:6px;
+  }
+  .short-version p:last-child{margin-bottom:0;}
+
+  blockquote{
+    margin:16px 0; padding:14px 18px;
+    background:var(--warn-soft); border-left:3px solid var(--warn);
+    border-radius:0 8px 8px 0; color:#5c380f;
+  }
+  blockquote p{margin:0; color:inherit;}
+  blockquote p + p{margin-top:8px;}
+
+  .callout-top{
+    background:var(--warn-soft); border:1px solid #e7cfa9; border-left:4px solid var(--warn);
+    border-radius:var(--radius); padding:16px 18px; margin:0 0 30px 0; color:#5c380f; font-size:14.5px;
+  }
+
+  table{width:100%; border-collapse:collapse; margin:0 0 16px 0; font-size:14px;}
+  caption{text-align:left; font-size:12.5px; color:var(--ink-faint); margin-bottom:6px;}
+  th,td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{font-family:'Lora',serif; font-weight:600; font-size:13px; color:var(--accent-deep); background:var(--accent-soft);}
+  tbody tr:hover{background:#FBFAF7;}
+  code{
+    font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background:#EFEDE6; color:var(--accent-deep);
+    padding:1.5px 5px; border-radius:4px; font-size:0.88em;
+  }
+  strong{font-weight:700;}
+  hr.section-rule{border:none; border-top:1px solid var(--line); margin:34px 0;}
+
+  mark.todo-flag{
+    background:var(--mark); color:#5c380f; padding:1px 5px; border-radius:4px;
+    font-weight:600; font-size:0.85em; font-family:ui-monospace,monospace;
+    border:1px solid #dcb85c;
+  }
+
+  .contact-card{
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px; font-size:14.5px;
+  }
+  .contact-card div{margin:3px 0;}
+
+  .back-to-top{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:8px; font-size:13px; color:var(--ink-faint);
+    text-decoration:none; cursor:pointer; background:none; border:none;
+    font-family:'Hanken Grotesk',sans-serif;
+  }
+  .back-to-top:hover{color:var(--accent-deep);}
+
+  footer.doc-footer{
+    margin-top:50px; padding-top:20px; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-faint); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+
+  /* mobile */
+  .menu-toggle{display:none;}
+  @media (max-width: 880px){
+    .shell{grid-template-columns:1fr;}
+    .sidebar{
+      position:static; max-height:none; border-right:none; border-bottom:1px solid var(--line);
+      display:none;
+    }
+    .sidebar.open{display:block;}
+    .menu-toggle{
+      display:inline-flex; align-items:center; gap:6px;
+      border:1px solid var(--line); background:var(--paper-raised);
+      border-radius:999px; padding:8px 12px; font-size:13px; font-weight:600;
+      cursor:pointer; color:var(--ink); font-family:'Hanken Grotesk',sans-serif;
+    }
+    .doc-tabs{order:3; width:100%; justify-content:center;}
+    .topbar{flex-wrap:wrap; row-gap:10px;}
+    .topbar-spacer{display:none;}
+    main{padding:30px 20px 90px 20px;}
+    .doc-hero h1{font-size:27px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     CONFIGURATION
+     Fill these in before publishing. Anything left as {{TOKEN}}
+     will be highlighted in the rendered page so it's easy to spot.
+     See README.md §1 in the original docs bundle for guidance on
+     each field.
+     ============================================================ -->
+<script>
+  const CONFIG = {
+    EFFECTIVE_DATE: "23 July 2026",
+    PUBLISHER_NAME: "Insep",
+    CONTACT_EMAIL: "insep9597@gmail.com",
+    POLICY_URL: "https://insep9597.github.io/notch-legal/",
+    REPOSITORY_URL: " ",
+    LICENSE_NAME: "All Rights Reserved",
+    SECURITY_CONTACT_OR_FILE: "insep9597@gmail.com",
+    GOVERNING_LAW: "Laws of the Republic of Turkey",
+    VENUE: "Courts and Enforcement Offices of Ankara, Turkey",
+    LIABILITY_CAP: "To the maximum extent permitted by applicable law, the amount paid by the user for the Service in the one (1) month preceding the event giving rise to liability, or 0 USD",
+    POSTAL_ADDRESS_IF_REQUIRED: " ",
+    LANGUAGE_PRECEDENCE_CLAUSE_EN: "In the event of a conflict, the Turkish text prevails for consumers resident in Türkiye; the English text prevails in all other cases.",
+    LANGUAGE_PRECEDENCE_CLAUSE_TR: "Metinler arasında çelişki hâlinde, Türkiye'de mukim tüketiciler bakımından Türkçe metin esas alınır; diğer hâllerde İngilizce metin esas alınır."
+  };
+
+  // ------------------------------------------------------------
+  // LANGUAGE REGISTRY — add a new language by adding one entry
+  // here and providing matching [data-lang="xx"] content blocks
+  // in the HTML below. Nothing else in this file needs to change.
+  // ------------------------------------------------------------
+  const LANGUAGES = [
+    { code: "en", label: "English",  native: "English" },
+    { code: "tr", label: "Turkish",  native: "Türkçe"  }
+  ];
+</script>
+
+<header class="topbar">
+  <a class="brand" href="#top">
+    <svg class="seal" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="20" cy="20" r="19" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.4"/>
+      <path d="M20 9 L20 17 M20 23 L20 31 M9 20 L17 20 M23 20 L31 20" stroke="var(--accent-deep)" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="5.2" fill="var(--accent)"/>
+      <rect x="17.7" y="17.5" width="4.6" height="5" rx="1.1" fill="var(--paper)"/>
+    </svg>
+    <span>Myth Notch <span style="color:var(--accent-deep); font-weight:500;">— Legal</span></span>
+  </a>
+
+  <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="sidebar">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <span data-i18n-ui="menu">Contents</span>
+  </button>
+
+  <div class="topbar-spacer"></div>
+
+  <nav class="doc-tabs" role="tablist" aria-label="Document">
+    <button class="doc-tab" data-doc="privacy" role="tab" aria-selected="true" data-i18n-ui="tabPrivacy">Privacy Policy</button>
+    <button class="doc-tab" data-doc="terms" role="tab" aria-selected="false" data-i18n-ui="tabTerms">Terms of Service</button>
+  </nav>
+
+  <div class="lang-switch">
+    <button class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
+      <span id="langBtnLabel">English</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="lang-menu" id="langMenu" role="listbox" aria-label="Language"></div>
+  </div>
+</header>
+
+<div class="shell" id="top">
+  <!-- ============================== SIDEBAR ============================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-block">
+      <p class="sidebar-label" data-i18n-ui="onThisPage">On this page</p>
+      <ul class="toc" id="toc"></ul>
+    </div>
+    <div class="sidebar-block">
+      <p class="sidebar-label" data-i18n-ui="documentInfo">Document info</p>
+      <div class="meta-card" id="metaCard"></div>
+    </div>
+  </aside>
+
+  <!-- ============================== MAIN ============================== -->
+  <main>
+
+    <!-- =========================================================
+         PRIVACY POLICY — ENGLISH
+         ========================================================= -->
+    <article class="doc-content active" data-doc="privacy" data-lang="en">
+      <div class="doc-hero">
+        <h1>Privacy Policy</h1>
+        <p class="tagline">Myth Notch</p>
+        <hr>
+      </div>
+
+      <section class="legal-section short-version" id="p-en-0">
+        <h2>0. The short version</h2>
+        <p>Myth Notch has <strong>no account, no server and no telemetry.</strong> We — the developer — do not receive, store, see or process your notes, your usage, your device identifiers, your IP address, or anything else. There is no backend to send data to.</p>
+        <p>Everything the app stores, it stores <strong>on your own device</strong>, encrypted with a key derived from a recovery phrase that only you hold. Network features (cloud sync, LAN sync) exist, are <strong>off by default</strong>, and when you turn one on, your data goes to a destination <strong>you</strong> chose — never to us.</p>
+        <p>The rest of this document explains that in the detail that data-protection law, Google Play and the Apple App Store require.</p>
+      </section>
+
+      <section class="legal-section" id="p-en-1">
+        <h2>1. Scope and role</h2>
+        <p>This policy covers the Myth Notch application only. It does not cover:</p>
+        <ul>
+          <li>other applications in the Myth ecosystem, which have their own policies;</li>
+          <li>third-party services you may choose to connect the app to (see §6);</li>
+          <li>your device's operating system, which is governed by your OS vendor's policy.</li>
+        </ul>
+        <p><strong>Our role under the GDPR / KVKK.</strong> Because the app processes your data exclusively on your own device, under your exclusive control, and transmits nothing to us, we do <strong>not</strong> act as a data controller or data processor for your notes. In data-protection terms, this is analogous to a word processor installed on your computer. Where you configure the app to send encrypted data to a third-party service (§6), <strong>you</strong> determine that destination; that provider's own terms and privacy policy apply to what they hold.</p>
+        <p>The only situation in which we process personal data is if you <strong>voluntarily contact us</strong> (§12).</p>
+      </section>
+
+      <section class="legal-section" id="p-en-2">
+        <h2>2. What we collect</h2>
+        <p><strong>Nothing.</strong></p>
+        <p>Specifically, and by design:</p>
+        <table>
+          <thead><tr><th>Category</th><th>Collected by us</th></tr></thead>
+          <tbody>
+            <tr><td>Notes, note content, titles, tags, attachments, voice recordings</td><td>No</td></tr>
+            <tr><td>Account or profile data</td><td>No — the app has no accounts</td></tr>
+            <tr><td>Email address, name, phone number</td><td>No</td></tr>
+            <tr><td>Device identifiers, advertising IDs, IP address</td><td>No</td></tr>
+            <tr><td>Usage / analytics / behavioural data</td><td>No</td></tr>
+            <tr><td>Crash reports, diagnostics, performance metrics</td><td>No</td></tr>
+            <tr><td>Location</td><td>No</td></tr>
+            <tr><td>Contacts, calendar, SMS, call logs</td><td>No — the app does not request these permissions</td></tr>
+            <tr><td>Photos / media library</td><td>No — see §5</td></tr>
+          </tbody>
+        </table>
+        <p>The application contains <strong>no analytics SDK, no advertising SDK, no crash-reporting SDK, no attribution or tracking library of any kind.</strong> The source code is available for inspection so that this claim can be verified rather than trusted (§13).</p>
+        <p>We do not sell, rent, share or disclose personal data, because we hold none. We have no data to hand over in response to a subpoena, warrant or government request, and no ability to access your vault at anyone's request — including your own (§7).</p>
+      </section>
+
+      <section class="legal-section" id="p-en-3">
+        <h2>3. What the app stores on your device</h2>
+        <p>All of the following is stored in the app's private storage area on your device (the <strong>vault</strong>) and never leaves it unless you explicitly enable a sync or export feature.</p>
+
+        <h3>3.1 Encrypted with AES-256-GCM</h3>
+        <ul>
+          <li><strong>Note content</strong> — text blocks, headings, lists, checkboxes, code blocks, tables, and the internal links between notes. One encrypted file per note.</li>
+          <li><strong>Attachments</strong> — images you attach and voice recordings you make, each stored as a separate encrypted file.</li>
+          <li><strong>The search index</strong> — a local database containing note titles, tag names, dates, word counts and note body text for search. The database file itself is encrypted at rest (SQLite3MultipleCiphers). It is derived data: deleting it is always safe, and it is never synced.</li>
+          <li><strong>Sync configuration and bookkeeping</strong> — including any WebDAV server address and credentials you enter, and Google Drive tokens, if you enable those features.</li>
+          <li><strong>Your custom note templates.</strong></li>
+        </ul>
+
+        <h3>3.2 Held in the operating system's secure store</h3>
+        <ul>
+          <li><strong>The vault master key</strong> and <strong>your 12-word recovery phrase</strong>, kept in the platform secure store (Android Keystore / iOS Keychain / Windows DPAPI / macOS Keychain / Linux libsecret) so the app can unlock at launch and re-display your Login Key when you ask for it.</li>
+          <li><strong>Optionally, the note-lock key</strong>, if you enable biometric quick-unlock for locked notes.</li>
+        </ul>
+
+        <h3>3.3 Stored as plain (non-secret) local files</h3>
+        <p>These deliberately contain <strong>no note content and no keys</strong>:</p>
+        <ul>
+          <li><strong>Preferences</strong> — theme, language, sync mode, sync interval, active workspace, screen-protection toggles, and a locally generated device name/identifier used to distinguish your own devices from each other during sync.</li>
+          <li><strong>A vault identity record</strong> — a version number and a cryptographic <em>verifier</em> used only to detect a mistyped recovery phrase. It contains no key and no phrase.</li>
+          <li><strong>Workspace names/colours</strong> and, on desktop, <strong>sticky-note window positions.</strong></li>
+          <li><strong>Wrapped key files</strong> for the optional hidden vault and per-note lock. These contain keys encrypted under your own passphrase — not usable without it.</li>
+        </ul>
+
+        <h3>3.4 Retention and deletion</h3>
+        <ul>
+          <li>Deleted notes go to Trash and are <strong>permanently purged after 30 days</strong>; you can purge them sooner.</li>
+          <li>You may delete any individual note, attachment, tag or workspace at any time.</li>
+          <li>Uninstalling the app removes the vault and the app's secure-store entries from that device, subject to your OS's behaviour. <strong>This is irreversible</strong> — there is no server-side copy.</li>
+          <li>The vault is <strong>excluded from operating-system cloud backup</strong> (<code>allowBackup="false"</code> and data-extraction rules on Android; the "exclude from backup" flag on iOS/macOS), so your vault is not silently copied into Google Drive or iCloud. Backups happen only when you create one yourself (§6.4).</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="p-en-4">
+        <h2>4. Why the app processes this data (lawful basis)</h2>
+        <p>Processing on your device is carried out <strong>by you, for your own purely personal or household purposes</strong>. Under Article 2(2)(c) GDPR ("household exemption") and the corresponding KVKK provision, such processing falls outside the scope of those regimes as regards us. To the extent any lawful basis is nonetheless required for the limited processing described above, it is:</p>
+        <ul>
+          <li><strong>Performance of a contract</strong> (Art. 6(1)(b) GDPR) — providing the app's core functionality that you asked for;</li>
+          <li><strong>Consent</strong> (Art. 6(1)(a)) — for every optional feature: cloud sync, LAN sync, voice recording and transcription, biometric unlock, camera and QR scanning. Each is off until you turn it on, and each can be turned off again.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="p-en-5">
+        <h2>5. Device permissions and why they are requested</h2>
+        <p>The app requests the minimum set of permissions and asks for each only at the moment the corresponding feature is first used. Declining any of them leaves the rest of the app fully functional.</p>
+        <table>
+          <thead><tr><th>Permission</th><th>Used for</th><th>Optional?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Microphone</strong> (<code>RECORD_AUDIO</code>, <code>NSMicrophoneUsageDescription</code>)</td><td>Recording a voice memo into a note. Audio is encrypted immediately and stored locally.</td><td>Yes</td></tr>
+            <tr><td><strong>Speech recognition</strong> (<code>NSSpeechRecognitionUsageDescription</code>)</td><td>Transcribing a voice memo to text (§6.6).</td><td>Yes</td></tr>
+            <tr><td><strong>Camera</strong> (<code>CAMERA</code>, <code>NSCameraUsageDescription</code>)</td><td>Taking a photo to attach to a note, and scanning a Login Key QR code shown on your other device.</td><td>Yes</td></tr>
+            <tr><td><strong>Biometrics / device credential</strong> (<code>USE_BIOMETRIC</code>, <code>NSFaceIDUsageDescription</code>)</td><td>Quick-unlocking locked notes, and confirming device ownership before hidden-vault setup. Biometric data never leaves the OS; the app only receives a yes/no result.</td><td>Yes</td></tr>
+            <tr><td><strong>Internet</strong> (<code>INTERNET</code>)</td><td>Only used when you enable WebDAV, Google Drive or LAN sync. With sync off, the app makes no network requests.</td><td>Yes in practice</td></tr>
+            <tr><td><strong>Local network / Wi-Fi state / multicast</strong> (<code>ACCESS_WIFI_STATE</code>, <code>CHANGE_WIFI_MULTICAST_STATE</code>, <code>NSLocalNetworkUsageDescription</code>, Bonjour <code>_notch-sync._tcp</code>)</td><td>Discovering your own other devices on the same Wi-Fi network for peer-to-peer sync.</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Deliberately not requested:</strong> location, contacts, calendar, SMS, call logs, and broad photo-library access (<code>READ_MEDIA_IMAGES</code>). Attaching an existing photo goes through the <strong>system photo picker</strong>, which hands the app only the specific images you selected and requires no permission.</p>
+      </section>
+
+      <section class="legal-section" id="p-en-6">
+        <h2>6. Optional features that involve a network or a third party</h2>
+        <p>All of the following are <strong>off by default</strong>. Enabling one is an explicit choice, made in Settings, with the consequences shown in the app.</p>
+
+        <h3>6.1 WebDAV sync</h3>
+        <p>If you configure a WebDAV server (for example your own Nextcloud), the app uploads your <strong>encrypted</strong> note files, attachments and configuration to the address you supplied. The app never decrypts data for transmission — the server operator sees ciphertext.</p>
+        <p><strong>However, the server operator (and, on an unencrypted connection, any network observer) can see metadata:</strong> file names, file sizes, timestamps, how often you sync, and your account name. To protect this, the app <strong>requires an <code>https://</code> URL</strong> and only permits plain <code>http://</code> to a local-network address (or via an explicit, off-by-default setting that states the risk in plain language). Your WebDAV credentials are stored encrypted in the vault and sent to that server only.</p>
+        <p>You choose the server. Its operator's privacy policy governs what they do with what they hold. We have no relationship with it.</p>
+
+        <h3>6.2 Google Drive sync</h3>
+        <p>If you enable Google Drive sync, the app authenticates you with Google and uploads <strong>encrypted</strong> files to Google Drive's <strong>App Data folder</strong> — a hidden, per-application area that is invisible in your normal Drive interface and inaccessible to other apps. The app requests <strong>only</strong> the <code>drive.appdata</code> scope; it cannot see, read or modify any other file in your Drive.</p>
+        <p>Google receives, and processes under <strong>its own</strong> privacy policy (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>): your Google account identity, the encrypted file contents, file names, sizes, and sync timestamps. We receive nothing. OAuth tokens are stored encrypted on your device.</p>
+
+        <h3>6.3 Peer-to-peer LAN sync</h3>
+        <p>Devices on the same local network discover each other via mDNS/Bonjour (service type <code>_notch-sync._tcp</code>), prove to each other that they hold the same vault key, and exchange encrypted data <strong>directly</strong>. Nothing passes through any server, including ours. Other devices on the same network can observe that a device is advertising the service and that a connection is taking place, but cannot read the content.</p>
+
+        <h3>6.4 Manual backup (.mythbak)</h3>
+        <p>"Export backup" creates a single archive file containing your already-encrypted vault files. Because the contents are ciphertext, the archive is encrypted at rest — but <strong>it can only be restored with your recovery phrase</strong>, and wherever you save or send that file is your choice and your responsibility.</p>
+
+        <h3>6.5 Exporting or sharing an individual note</h3>
+        <p>Exporting a note to <strong>Markdown or PDF</strong>, or sharing it via the OS share sheet or clipboard, produces a <strong>decrypted, plaintext copy</strong> at a location of your choosing, outside the app's protection. This is a deliberate, explicitly requested exception to the "no plaintext on disk" rule. Once exported, the file is an ordinary file: it may be backed up by your OS, indexed by your device's search, or read by other apps.</p>
+
+        <h3>6.6 Voice transcription</h3>
+        <p>Transcription of a finished voice memo is handed to your <strong>operating system's own speech-recognition service</strong> (Android's speech recognizer, Apple's <code>SFSpeechRecognizer</code>). The app does not operate a transcription service and sends nothing to us.</p>
+        <p><strong>An honest limitation:</strong> whether that OS service processes audio entirely on-device or sends it to the vendor's servers is <strong>determined by your operating system, device and settings, not by this app.</strong> On many Android devices the default recognizer is Google's and may use the network unless an offline language pack is installed; Apple's recognizer may use server-based recognition unless on-device dictation is available. If this matters to your threat model, leave transcription off — it is off by default — or verify your OS's offline speech settings.</p>
+
+        <h3>6.7 Read-aloud (text-to-speech)</h3>
+        <p>Reading mode's "read aloud" passes note text to your <strong>operating system's text-to-speech engine</strong>. The same caveat as §6.6 applies: some OS TTS voices are network-backed.</p>
+
+        <h3>6.8 Android share-sheet capture and home-screen widget</h3>
+        <p>The app can receive text or images shared to it from other apps, and offers a home-screen shortcut into quick capture. Data flows <em>into</em> the app only, when you send it there.</p>
+
+        <h3>6.9 Updates and app stores</h3>
+        <p>If you installed the app from Google Play or the App Store, that store collects installation, purchase and crash data under <strong>its own</strong> policy, independently of us. We do not integrate with any store analytics.</p>
+      </section>
+
+      <section class="legal-section" id="p-en-7">
+        <h2>7. Encryption, your recovery phrase, and what we cannot do</h2>
+        <ul>
+          <li>Every note, attachment and the search index are encrypted at rest with <strong>AES-256-GCM</strong>, with a fresh random nonce per write.</li>
+          <li>The master key is derived from your <strong>12-word recovery phrase</strong> using <strong>Argon2id</strong>. The phrase <em>is</em> your identity: typing it on another device reconstructs the same vault. There is no account and no key escrow.</li>
+          <li>Optional layers use their own separate keys: the <strong>hidden vault</strong> and each <strong>decoy layer</strong> have their own independently derived keys and their own recovery codes; the <strong>per-note lock</strong> uses one separate credential shared across locked notes.</li>
+        </ul>
+        <p><strong>We hold no copy of any key or phrase, and there is no recovery mechanism, backdoor or master key.</strong></p>
+        <blockquote>
+          <p><strong>If you lose your recovery phrase, your notes are permanently and irreversibly unreadable — by you, by us, and by anyone else.</strong> The same applies, per layer, to a hidden vault whose phrase <em>and</em> one-time recovery code are both lost. We cannot help. This is not a policy choice we could reverse on request; it is a property of the design.</p>
+        </blockquote>
+        <p>Store your recovery phrase somewhere safe and offline. Do not photograph it on a device that syncs to the cloud. The Login Key screen blocks screenshots for this reason.</p>
+      </section>
+
+      <section class="legal-section" id="p-en-8">
+        <h2>8. Optional privacy layers, and their honest limits</h2>
+        <p>The app offers protections beyond baseline encryption. Each is described here together with what it does <strong>not</strong> protect against.</p>
+        <p><strong>Hidden vault.</strong> A separate, opt-in encrypted vault with no visible entry point, intended for a threat model in which the <em>existence</em> of protected content should not be provable. It is opened by typing its phrase into the ordinary composer.</p>
+        <p><strong>Decoy layers.</strong> Up to two additional phrases, each opening a different set of notes, intended for coercion scenarios. A decoy can never reach a higher layer, because the higher layer's keys are not mathematically derivable from it.</p>
+        <p><strong>Per-note lock.</strong> A visible lock on individual notes, with one shared passphrase or pattern, protecting against a casual glance at an unlocked device.</p>
+        <p><strong>Screen protection.</strong> Blocking screenshots, screen recording and app-switcher thumbnails, configurable per content type.</p>
+
+        <h3>What these do not protect against</h3>
+        <p>We state these plainly rather than let marketing imply otherwise:</p>
+        <ul>
+          <li><strong>A compromised device.</strong> Malware, spyware, a rooted/jailbroken device, or an attacker with your unlocked device and your phrase defeats every layer. Encryption protects data at rest, not a machine already under someone else's control.</li>
+          <li><strong>Metadata.</strong> Sync providers and network observers can see file sizes, counts and timing even though contents are ciphertext.</li>
+          <li><strong>Forensic examination.</strong> The design avoids obvious traces, but we make <strong>no guarantee</strong> that a determined forensic examination of your device, its filesystem, its backups, its memory or its wear-levelled storage cannot infer the presence of additional data. Deniability is a design goal, not a mathematical promise.</li>
+          <li><strong>iOS screenshots.</strong> Apple provides no way for an app to block a screenshot; on iOS only the app-switcher thumbnail can be protected. The app tells you this in-app rather than implying otherwise.</li>
+          <li><strong>Anything outside the vault.</strong> Exported files, screenshots you take, text you copy to the clipboard, and OS-level dictation or TTS are outside the app's control.</li>
+          <li><strong>Legal compulsion.</strong> See §7 of the Terms of Service.</li>
+        </ul>
+        <p>No software can promise perfect security. The app is engineered carefully and its code is open to inspection, but it is provided without warranty (see the Terms of Service).</p>
+      </section>
+
+      <section class="legal-section" id="p-en-9">
+        <h2>9. Children</h2>
+        <p>Myth Notch is not directed at children and collects no data from anyone. It is intended for users aged <strong>13 and over</strong> (or <strong>16 and over</strong> where local law, including in parts of the EEA, sets that as the age of digital consent). If you are below that age, please use the app only with the involvement of a parent or guardian.</p>
+      </section>
+
+      <section class="legal-section" id="p-en-10">
+        <h2>10. Your data-protection rights</h2>
+        <p>Because we hold none of your data, the classic rights are satisfied structurally rather than by request:</p>
+        <table>
+          <thead><tr><th>Right (GDPR / KVKK / CCPA-CPRA)</th><th>How it is satisfied</th></tr></thead>
+          <tbody>
+            <tr><td>Access / know</td><td>Your data is in your possession at all times.</td></tr>
+            <tr><td>Rectification</td><td>Edit any note directly.</td></tr>
+            <tr><td>Erasure ("right to be forgotten")</td><td>Delete notes, or uninstall the app / delete the vault folder.</td></tr>
+            <tr><td>Portability</td><td>Export a <code>.mythbak</code> archive, or export notes to Markdown/PDF.</td></tr>
+            <tr><td>Restriction &amp; objection</td><td>Disable any optional feature at any time; the app works fully offline.</td></tr>
+            <tr><td>Right to opt out of sale/sharing</td><td>Not applicable — we sell and share nothing. <strong>We do not sell personal information and have not done so in the preceding 12 months.</strong></td></tr>
+            <tr><td>Non-discrimination</td><td>The app is identical for everyone; there are no accounts or tiers.</td></tr>
+            <tr><td>Automated decision-making / profiling</td><td>None takes place.</td></tr>
+          </tbody>
+        </table>
+        <p>If you contact us by email (§12) and wish to have that correspondence deleted, ask and we will delete it.</p>
+        <p>You have the right to lodge a complaint with a supervisory authority — in Türkiye, the <strong>Kişisel Verileri Koruma Kurumu (KVKK)</strong>; in the EEA, your national data-protection authority.</p>
+      </section>
+
+      <section class="legal-section" id="p-en-11">
+        <h2>11. International transfers, breaches, and law-enforcement requests</h2>
+        <ul>
+          <li><strong>Transfers.</strong> We operate no servers and transfer no data internationally. If you enable Google Drive sync, Google may store your encrypted data in jurisdictions determined by Google, under Google's own terms.</li>
+          <li><strong>Breaches.</strong> We hold no personal data, so a breach of our systems cannot expose your notes. If we ever became aware of a vulnerability in the app that could expose user data, we would publish it in the project's public repository and release a fix, and would notify affected users through the app or the store listing where feasible.</li>
+          <li><strong>Law enforcement.</strong> We cannot produce your notes, keys or identity in response to any legal request, because we do not have them. Requests concerning data you chose to sync to a third-party provider must be addressed to that provider.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="p-en-12">
+        <h2>12. If you contact us</h2>
+        <p>If you email us for support or to exercise a right, we receive whatever you choose to include: your email address, your message, and any details or screenshots you attach. We use this <strong>solely</strong> to answer you, keep it only as long as needed for that purpose, and never use it for marketing or share it with anyone. Please <strong>never</strong> send us your recovery phrase, a passphrase, a screenshot of your Login Key, or an unencrypted export of your notes — we do not need them and cannot use them, and no genuine support request will ever ask for them.</p>
+        <p>Lawful basis: legitimate interest in responding to correspondence (Art. 6(1)(f) GDPR).</p>
+      </section>
+
+      <section class="legal-section" id="p-en-13">
+        <h2>13. Open source and verifiability</h2>
+        <p>The source code of Myth Notch is published at <strong data-fill="REPOSITORY_URL">{{REPOSITORY_URL}}</strong> under the <strong data-fill="LICENSE_NAME">{{LICENSE_NAME}}</strong> licence. Every claim in this policy — no telemetry, no analytics, encryption before writing to disk, the exact scope requested from Google Drive — can be verified by reading the code rather than trusting this document. Independent security review is welcome; please report findings to <span data-fill="CONTACT_EMAIL">{{CONTACT_EMAIL}}</span> (see also <code data-fill="SECURITY_CONTACT_OR_FILE">{{SECURITY_CONTACT_OR_FILE}}</code>).</p>
+        <p>The app bundles third-party open-source components (including the Flutter framework, the AppFlowy editor, and the Lora and Hanken Grotesk typefaces) under their respective licences; a complete list is available in-app under Settings → About → Licences.</p>
+      </section>
+
+      <section class="legal-section" id="p-en-14">
+        <h2>14. Changes to this policy</h2>
+        <p>We may update this policy when the app's features change or the law requires it. The "Last updated" date at the top always reflects the current version, and previous versions remain in the project's public version history. For any change that <strong>materially</strong> affects how data is handled, we will surface a notice in the app before the change takes effect. Continuing to use the app after a change means you accept the updated policy.</p>
+      </section>
+
+      <section class="legal-section" id="p-en-15">
+        <h2>15. Contact</h2>
+        <div class="contact-card">
+          <div><strong data-fill="PUBLISHER_NAME">{{PUBLISHER_NAME}}</strong></div>
+          <div>Email: <span data-fill="CONTACT_EMAIL">{{CONTACT_EMAIL}}</span></div>
+          <div data-fill="POSTAL_ADDRESS_IF_REQUIRED"></div>
+          <div>Policy URL: <span data-fill="POLICY_URL">{{POLICY_URL}}</span></div>
+        </div>
+      </section>
+
+      <section class="legal-section" id="p-en-A">
+        <h2>Appendix A — Store disclosure summary</h2>
+        <p>Provided to keep this policy consistent with the declarations made on the app stores.</p>
+        <p><strong>Google Play Data Safety:</strong></p>
+        <ul>
+          <li>Data collected: <strong>None.</strong></li>
+          <li>Data shared: <strong>None.</strong></li>
+          <li>Data processed ephemerally: none by the developer.</li>
+          <li>Encryption in transit: yes, for all optional sync features (HTTPS for WebDAV/Drive; application-layer AES-256-GCM for all payloads, including LAN sync).</li>
+          <li>Encryption at rest: yes, AES-256-GCM.</li>
+          <li>Users can request data deletion: yes — data is local and deletable in-app or by uninstalling; there is no account to delete.</li>
+          <li>Committed to the Play Families Policy: not applicable (not directed at children).</li>
+        </ul>
+        <p><strong>Apple App Store privacy label:</strong> <strong>Data Not Collected.</strong></p>
+        <p><strong>Optional user-directed transmission</strong> (disclosed above in §6): when the user enables WebDAV, Google Drive or LAN sync, encrypted note data is transmitted to a destination the user selects. This is user-initiated data transfer to a third party of the user's choosing, not collection by the developer.</p>
+      </section>
+
+      <footer class="doc-footer">
+        <span>Myth Notch — Privacy Policy</span>
+        <span>Effective <span data-fill="EFFECTIVE_DATE">{{EFFECTIVE_DATE}}</span></span>
+      </footer>
+    </article>
+
+    <!-- =========================================================
+         PRIVACY POLICY — TURKISH
+         ========================================================= -->
+    <article class="doc-content" data-doc="privacy" data-lang="tr">
+      <div class="doc-hero">
+        <h1>Gizlilik Politikası</h1>
+        <p class="tagline">Myth Notch</p>
+        <hr>
+      </div>
+
+      <section class="legal-section short-version" id="p-tr-0">
+        <h2>0. Kısa özet</h2>
+        <p>Myth Notch'un <strong>hesabı, sunucusu ve telemetrisi yoktur.</strong> Biz — geliştirici — notlarınızı, kullanım verinizi, cihaz tanımlayıcılarınızı, IP adresinizi veya başka hiçbir şeyi almıyor, saklamıyor, görmüyor ve işlemiyoruz. Veri gönderilecek bir arka uç mevcut değildir.</p>
+        <p>Uygulamanın sakladığı her şey <strong>kendi cihazınızda</strong>, yalnızca sizde bulunan bir kurtarma ifadesinden türetilen anahtarla şifrelenmiş olarak durur. Ağ özellikleri (bulut senkronizasyonu, yerel ağ senkronizasyonu) mevcuttur, <strong>varsayılan olarak kapalıdır</strong> ve açtığınızda verileriniz <strong>sizin seçtiğiniz</strong> hedefe gider — asla bize değil.</p>
+        <p>Belgenin geri kalanı, bunu veri koruma mevzuatının, Google Play'in ve Apple App Store'un talep ettiği ayrıntıda açıklar.</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-1">
+        <h2>1. Kapsam ve rolümüz</h2>
+        <p>Bu politika yalnızca Myth Notch uygulamasını kapsar. Kapsamadıkları:</p>
+        <ul>
+          <li>Kendi politikaları bulunan diğer Myth ekosistemi uygulamaları;</li>
+          <li>Uygulamayı bağlamayı seçebileceğiniz üçüncü taraf hizmetler (bkz. §6);</li>
+          <li>İşletim sisteminiz — bu, cihaz üreticinizin/OS sağlayıcınızın politikasına tabidir.</li>
+        </ul>
+        <p><strong>KVKK / GDPR karşısındaki rolümüz.</strong> Uygulama verilerinizi münhasıran kendi cihazınızda, sizin kontrolünüzde işlediği ve bize hiçbir şey iletmediği için, notlarınız bakımından <strong>veri sorumlusu veya veri işleyen değiliz.</strong> Hukuken bu durum, bilgisayarınıza kurduğunuz bir kelime işlemciye benzer. Uygulamayı şifreli veriyi üçüncü taraf bir hizmete gönderecek şekilde yapılandırırsanız (§6), o hedefi <strong>siz</strong> belirlemiş olursunuz; o sağlayıcının kendi şartları ve gizlilik politikası geçerlidir.</p>
+        <p>Kişisel veri işlediğimiz tek durum, <strong>kendi isteğinizle bizimle iletişime geçmenizdir</strong> (§12).</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-2">
+        <h2>2. Topladığımız veriler</h2>
+        <p><strong>Hiçbiri.</strong></p>
+        <p>Tasarım gereği, açıkça:</p>
+        <table>
+          <thead><tr><th>Kategori</th><th>Bizim tarafımızdan toplanıyor mu</th></tr></thead>
+          <tbody>
+            <tr><td>Notlar, not içeriği, başlıklar, etiketler, ekler, ses kayıtları</td><td>Hayır</td></tr>
+            <tr><td>Hesap veya profil bilgisi</td><td>Hayır — uygulamada hesap yoktur</td></tr>
+            <tr><td>E-posta, ad, telefon numarası</td><td>Hayır</td></tr>
+            <tr><td>Cihaz tanımlayıcıları, reklam kimlikleri, IP adresi</td><td>Hayır</td></tr>
+            <tr><td>Kullanım / analitik / davranışsal veri</td><td>Hayır</td></tr>
+            <tr><td>Çökme raporları, tanılama, performans ölçümleri</td><td>Hayır</td></tr>
+            <tr><td>Konum</td><td>Hayır</td></tr>
+            <tr><td>Rehber, takvim, SMS, çağrı kayıtları</td><td>Hayır — bu izinler hiç istenmez</td></tr>
+            <tr><td>Fotoğraf / medya kitaplığı</td><td>Hayır — bkz. §5</td></tr>
+          </tbody>
+        </table>
+        <p>Uygulamada <strong>hiçbir analitik SDK'sı, reklam SDK'sı, çökme raporlama SDK'sı veya izleme/atıf kütüphanesi bulunmaz.</strong> Kaynak kod incelemeye açıktır; bu iddia güvenilmek yerine doğrulanabilir (§13).</p>
+        <p>Kişisel veriyi satmıyor, kiralamıyor, paylaşmıyor veya ifşa etmiyoruz — çünkü elimizde yok. Bir mahkeme kararı, arama izni veya resmî talep karşısında teslim edebileceğimiz bir veri ve kasanıza erişebilme imkânımız yoktur; bu, sizin talebiniz için dahi geçerlidir (§7).</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-3">
+        <h2>3. Uygulamanın cihazınızda sakladıkları</h2>
+        <p>Aşağıdakilerin tamamı cihazınızdaki uygulamaya özel depolama alanında (<strong>kasa</strong>) tutulur ve bir senkronizasyon ya da dışa aktarma özelliğini açıkça etkinleştirmediğiniz sürece cihazdan çıkmaz.</p>
+
+        <h3>3.1 AES-256-GCM ile şifreli</h3>
+        <ul>
+          <li><strong>Not içeriği</strong> — metin blokları, başlıklar, listeler, onay kutuları, kod blokları, tablolar ve notlar arasındaki bağlantılar. Her not ayrı bir şifreli dosyadır.</li>
+          <li><strong>Ekler</strong> — eklediğiniz görseller ve kaydettiğiniz sesler; her biri ayrı şifreli dosya.</li>
+          <li><strong>Arama dizini</strong> — not başlıkları, etiket adları, tarihler, kelime sayıları ve arama için not gövde metnini içeren yerel veritabanı. Dosyanın kendisi diskte şifrelidir (SQLite3MultipleCiphers). Türetilmiş veridir: silinmesi her zaman güvenlidir ve asla senkronize edilmez.</li>
+          <li><strong>Senkronizasyon yapılandırması</strong> — bu özellikleri açtıysanız girdiğiniz WebDAV sunucu adresi ve kimlik bilgileri ile Google Drive erişim jetonları.</li>
+          <li><strong>Kendi oluşturduğunuz not şablonlarınız.</strong></li>
+        </ul>
+
+        <h3>3.2 İşletim sisteminin güvenli deposunda</h3>
+        <ul>
+          <li><strong>Kasa ana anahtarı</strong> ve <strong>12 kelimelik kurtarma ifadeniz</strong>, platformun güvenli deposunda (Android Keystore / iOS Keychain / Windows DPAPI / macOS Keychain / Linux libsecret) tutulur; böylece uygulama açılışta kilidi açabilir ve istediğinizde Giriş Anahtarınızı yeniden gösterebilir.</li>
+          <li><strong>İsteğe bağlı olarak not kilidi anahtarı</strong>, kilitli notlar için biyometrik hızlı açmayı etkinleştirdiyseniz.</li>
+        </ul>
+
+        <h3>3.3 Düz (gizli olmayan) yerel dosyalar</h3>
+        <p>Bunlar bilinçli olarak <strong>hiçbir not içeriği ve hiçbir anahtar</strong> barındırmaz:</p>
+        <ul>
+          <li><strong>Tercihler</strong> — tema, dil, senkronizasyon modu ve aralığı, etkin çalışma alanı, ekran koruma anahtarları ve senkronizasyon sırasında kendi cihazlarınızı birbirinden ayırmak için yerel olarak üretilen bir cihaz adı/kimliği.</li>
+          <li><strong>Kasa kimlik kaydı</strong> — bir sürüm numarası ve yalnızca yanlış yazılmış kurtarma ifadesini tespit etmeye yarayan kriptografik bir <em>doğrulayıcı</em>. Anahtar veya ifade içermez.</li>
+          <li><strong>Çalışma alanı adları/renkleri</strong> ve masaüstünde <strong>yapışkan not pencere konumları.</strong></li>
+          <li>İsteğe bağlı gizli kasa ve not kilidi için <strong>sarmalanmış anahtar dosyaları.</strong> Bunlar, sizin parolanızla şifrelenmiş anahtarlar içerir; parola olmadan kullanılamazlar.</li>
+        </ul>
+
+        <h3>3.4 Saklama ve silme</h3>
+        <ul>
+          <li>Silinen notlar Çöp Kutusu'na gider ve <strong>30 gün sonra kalıcı olarak temizlenir</strong>; daha erken de temizleyebilirsiniz.</li>
+          <li>Herhangi bir notu, eki, etiketi veya çalışma alanını istediğiniz anda silebilirsiniz.</li>
+          <li>Uygulamayı kaldırmak, kasayı ve güvenli depo kayıtlarını o cihazdan siler (işletim sisteminin davranışına tabidir). <strong>Bu geri alınamaz</strong> — sunucu tarafında bir kopya yoktur.</li>
+          <li>Kasa, <strong>işletim sistemi bulut yedeklemesinin dışında tutulur</strong> (Android'de <code>allowBackup="false"</code> ve veri çıkarma kuralları; iOS/macOS'ta "yedekten hariç tut" bayrağı). Yani kasanız sessizce Google Drive veya iCloud'a kopyalanmaz. Yedek yalnızca siz oluşturduğunuzda oluşur (§6.4).</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="p-tr-4">
+        <h2>4. İşlemenin hukuki dayanağı</h2>
+        <p>Cihazınızdaki işleme, <strong>tamamen kendi kişisel veya ev içi amaçlarınız doğrultusunda sizin tarafınızdan</strong> gerçekleştirilir. GDPR m. 2(2)(c) ("ev içi istisna") ve KVKK'nın karşılık gelen hükmü uyarınca bu tür işleme, bizim açımızdan ilgili rejimlerin kapsamı dışında kalır. Yine de bir hukuki sebep gerekli olduğu ölçüde bu sebep:</p>
+        <ul>
+          <li><strong>Sözleşmenin ifası</strong> (GDPR m. 6(1)(b); KVKK m. 5/2-c) — talep ettiğiniz temel işlevlerin sağlanması;</li>
+          <li><strong>Açık rıza</strong> (GDPR m. 6(1)(a); KVKK m. 5/1) — her isteğe bağlı özellik için: bulut senkronizasyonu, yerel ağ senkronizasyonu, ses kaydı ve deşifre, biyometrik açma, kamera ve QR tarama. Her biri siz açana kadar kapalıdır ve tekrar kapatılabilir.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="p-tr-5">
+        <h2>5. Cihaz izinleri ve gerekçeleri</h2>
+        <p>Uygulama asgari izin setini ister ve her izni yalnızca ilgili özellik ilk kez kullanıldığı anda talep eder. Herhangi birini reddetmeniz uygulamanın geri kalanını etkilemez.</p>
+        <table>
+          <thead><tr><th>İzin</th><th>Ne için</th><th>İsteğe bağlı mı</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Mikrofon</strong> (<code>RECORD_AUDIO</code>, <code>NSMicrophoneUsageDescription</code>)</td><td>Nota sesli not kaydetmek. Ses anında şifrelenip yerel olarak saklanır.</td><td>Evet</td></tr>
+            <tr><td><strong>Konuşma tanıma</strong> (<code>NSSpeechRecognitionUsageDescription</code>)</td><td>Sesli notu metne çevirmek (§6.6).</td><td>Evet</td></tr>
+            <tr><td><strong>Kamera</strong> (<code>CAMERA</code>, <code>NSCameraUsageDescription</code>)</td><td>Nota eklemek üzere fotoğraf çekmek ve diğer cihazınızdaki Giriş Anahtarı QR kodunu okutmak.</td><td>Evet</td></tr>
+            <tr><td><strong>Biyometri / cihaz parolası</strong> (<code>USE_BIOMETRIC</code>, <code>NSFaceIDUsageDescription</code>)</td><td>Kilitli notları hızlı açmak ve gizli kasa kurulumundan önce cihaz sahipliğini doğrulamak. Biyometrik veri işletim sisteminden hiç çıkmaz; uygulama yalnızca evet/hayır sonucunu alır.</td><td>Evet</td></tr>
+            <tr><td><strong>İnternet</strong> (<code>INTERNET</code>)</td><td>Yalnızca WebDAV, Google Drive veya yerel ağ senkronizasyonunu açtığınızda kullanılır. Senkronizasyon kapalıyken uygulama hiçbir ağ isteği yapmaz.</td><td>Fiilen evet</td></tr>
+            <tr><td><strong>Yerel ağ / Wi-Fi durumu / multicast</strong> (<code>ACCESS_WIFI_STATE</code>, <code>CHANGE_WIFI_MULTICAST_STATE</code>, <code>NSLocalNetworkUsageDescription</code>, Bonjour <code>_notch-sync._tcp</code>)</td><td>Aynı Wi-Fi ağındaki kendi diğer cihazlarınızı eşler arası senkronizasyon için keşfetmek.</td><td>Evet</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Bilinçli olarak istenmeyenler:</strong> konum, rehber, takvim, SMS, çağrı kayıtları ve geniş fotoğraf kitaplığı erişimi (<code>READ_MEDIA_IMAGES</code>). Mevcut bir fotoğrafı eklemek <strong>sistem fotoğraf seçicisi</strong> üzerinden yapılır; bu, uygulamaya yalnızca sizin seçtiğiniz görselleri verir ve izin gerektirmez.</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-6">
+        <h2>6. Ağ veya üçüncü taraf içeren isteğe bağlı özellikler</h2>
+        <p>Aşağıdakilerin tamamı <strong>varsayılan olarak kapalıdır.</strong> Birini açmak, sonuçları uygulama içinde gösterilen, Ayarlar'dan yapılan açık bir tercihtir.</p>
+
+        <h3>6.1 WebDAV senkronizasyonu</h3>
+        <p>Bir WebDAV sunucusu (örneğin kendi Nextcloud'unuz) tanımlarsanız, uygulama <strong>şifreli</strong> not dosyalarınızı, eklerinizi ve yapılandırmanızı verdiğiniz adrese yükler. Uygulama iletim için veriyi asla çözmez — sunucu işletmecisi şifreli metin görür.</p>
+        <p><strong>Ancak sunucu işletmecisi (ve şifresiz bağlantıda ağı izleyen herkes) üstveriyi görebilir:</strong> dosya adları, boyutları, zaman damgaları, ne sıklıkla senkronize ettiğiniz ve hesap adınız. Bunu korumak için uygulama <strong><code>https://</code> adresi zorunlu tutar</strong> ve düz <code>http://</code> bağlantısına yalnızca yerel ağ adresleri için (ya da riski açıkça belirten, varsayılan kapalı bir ayarla) izin verir. WebDAV kimlik bilgileriniz kasada şifreli saklanır ve yalnızca o sunucuya gönderilir.</p>
+        <p>Sunucuyu siz seçersiniz. Elindeki veriyle ne yaptığını o işletmecinin gizlilik politikası belirler; bizim onunla hiçbir ilişkimiz yoktur.</p>
+
+        <h3>6.2 Google Drive senkronizasyonu</h3>
+        <p>Google Drive senkronizasyonunu açarsanız uygulama sizi Google'da kimlik doğrular ve <strong>şifreli</strong> dosyaları Drive'ın <strong>App Data (uygulama verisi) klasörüne</strong> yükler — bu, normal Drive arayüzünüzde görünmeyen ve diğer uygulamaların erişemediği, uygulamaya özel gizli bir alandır. Uygulama <strong>yalnızca</strong> <code>drive.appdata</code> yetkisini ister; Drive'ınızdaki başka hiçbir dosyayı göremez, okuyamaz veya değiştiremez.</p>
+        <p>Google, <strong>kendi</strong> gizlilik politikası (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>) kapsamında şunları alır ve işler: Google hesap kimliğiniz, şifreli dosya içerikleri, dosya adları, boyutlar ve senkronizasyon zaman damgaları. Biz hiçbir şey almayız. OAuth jetonları cihazınızda şifreli saklanır.</p>
+
+        <h3>6.3 Eşler arası (P2P) yerel ağ senkronizasyonu</h3>
+        <p>Aynı yerel ağdaki cihazlar birbirini mDNS/Bonjour ile (<code>_notch-sync._tcp</code> hizmet tipi) bulur, aynı kasa anahtarına sahip olduklarını birbirlerine kanıtlar ve şifreli veriyi <strong>doğrudan</strong> değiş tokuş eder. Hiçbir sunucudan geçmez — bizimkiler dahil. Aynı ağdaki diğer cihazlar bir cihazın hizmeti duyurduğunu ve bağlantı kurulduğunu gözlemleyebilir, ancak içeriği okuyamaz.</p>
+
+        <h3>6.4 Elle yedekleme (.mythbak)</h3>
+        <p>"Yedeği dışa aktar", hâlihazırda şifreli kasa dosyalarınızı tek bir arşiv dosyasında toplar. İçerik şifreli metin olduğu için arşiv de diskte şifrelidir — ancak <strong>yalnızca kurtarma ifadenizle geri yüklenebilir</strong> ve o dosyayı nereye kaydettiğiniz ya da gönderdiğiniz sizin seçiminiz ve sorumluluğunuzdadır.</p>
+
+        <h3>6.5 Tek bir notu dışa aktarma veya paylaşma</h3>
+        <p>Bir notu <strong>Markdown veya PDF</strong> olarak dışa aktarmak ya da sistem paylaşım sayfası/pano üzerinden paylaşmak, seçtiğiniz konumda <strong>şifresi çözülmüş, düz metin bir kopya</strong> oluşturur; bu kopya uygulamanın korumasının dışındadır. Bu, "diskte düz metin olmaz" kuralının bilinçli ve açıkça talep edilmiş istisnasıdır. Dışa aktarıldıktan sonra dosya sıradan bir dosyadır: işletim sisteminizce yedeklenebilir, cihaz aramasınca dizinlenebilir veya başka uygulamalarca okunabilir.</p>
+
+        <h3>6.6 Sesin metne çevrilmesi</h3>
+        <p>Tamamlanmış bir sesli notun deşifresi, <strong>işletim sisteminizin kendi konuşma tanıma hizmetine</strong> verilir (Android'in konuşma tanıyıcısı, Apple'ın <code>SFSpeechRecognizer</code>'ı). Uygulama bir deşifre hizmeti işletmez ve bize hiçbir şey göndermez.</p>
+        <p><strong>Dürüst bir sınır:</strong> o işletim sistemi hizmetinin sesi tamamen cihazda mı işlediği yoksa üreticinin sunucularına mı gönderdiği, <strong>bu uygulama tarafından değil, işletim sisteminiz, cihazınız ve ayarlarınız tarafından belirlenir.</strong> Birçok Android cihazda varsayılan tanıyıcı Google'ınkidir ve çevrimdışı dil paketi kurulu değilse ağı kullanabilir; Apple'ın tanıyıcısı da cihaz üstü dikte kullanılabilir değilse sunucu tabanlı tanıma yapabilir. Bu tehdit modelinizde önemliyse deşifreyi kapalı bırakın — zaten varsayılan kapalıdır — veya işletim sisteminizin çevrimdışı konuşma ayarlarını doğrulayın.</p>
+
+        <h3>6.7 Sesli okuma (metin okuma)</h3>
+        <p>Okuma modundaki "sesli oku", not metnini <strong>işletim sisteminizin metin okuma motoruna</strong> iletir. §6.6'daki uyarı burada da geçerlidir: bazı sistem sesleri ağ tabanlıdır.</p>
+
+        <h3>6.8 Android paylaşım sayfası ve ana ekran araç takımı</h3>
+        <p>Uygulama, başka uygulamalardan kendisine paylaşılan metin veya görselleri alabilir ve hızlı not için bir ana ekran kısayolu sunar. Veri yalnızca <em>içeri</em>, siz gönderdiğinizde akar.</p>
+
+        <h3>6.9 Güncellemeler ve uygulama mağazaları</h3>
+        <p>Uygulamayı Google Play veya App Store'dan kurduysanız, o mağaza kurulum, satın alma ve çökme verilerini <strong>kendi</strong> politikası kapsamında, bizden bağımsız olarak toplar. Hiçbir mağaza analitiğiyle entegrasyonumuz yoktur.</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-7">
+        <h2>7. Şifreleme, kurtarma ifadeniz ve yapamayacaklarımız</h2>
+        <ul>
+          <li>Her not, ek ve arama dizini diskte <strong>AES-256-GCM</strong> ile, her yazımda yeni ve rastgele bir nonce kullanılarak şifrelenir.</li>
+          <li>Ana anahtar, <strong>12 kelimelik kurtarma ifadenizden</strong> <strong>Argon2id</strong> ile türetilir. İfade, kimliğinizin ta kendisidir: başka bir cihazda yazdığınızda aynı kasa yeniden kurulur. Hesap yoktur, anahtar emaneti yoktur.</li>
+          <li>İsteğe bağlı katmanların kendi ayrı anahtarları vardır: <strong>gizli kasa</strong> ve her <strong>yem (decoy) katmanı</strong> bağımsız türetilmiş kendi anahtarına ve kendi kurtarma koduna sahiptir; <strong>not kilidi</strong> ise kilitli notlar arasında paylaşılan tek bir ayrı kimlik bilgisi kullanır.</li>
+        </ul>
+        <p><strong>Hiçbir anahtarın veya ifadenin kopyası bizde yoktur; kurtarma mekanizması, arka kapı veya ana anahtar mevcut değildir.</strong></p>
+        <blockquote>
+          <p><strong>Kurtarma ifadenizi kaybederseniz notlarınız kalıcı ve geri dönüşsüz biçimde okunamaz hâle gelir — sizin için de, bizim için de, başka herkes için de.</strong> Aynısı, hem ifadesi hem tek kullanımlık kurtarma kodu kaybedilmiş bir gizli kasa katmanı için de geçerlidir. Yardımcı olamayız. Bu, talep üzerine geri alabileceğimiz bir politika tercihi değil, tasarımın doğrudan sonucudur.</p>
+        </blockquote>
+        <p>Kurtarma ifadenizi güvenli ve çevrimdışı bir yerde saklayın. Bulutla senkronize olan bir cihazda fotoğrafını çekmeyin. Giriş Anahtarı ekranı tam da bu nedenle ekran görüntüsünü engeller.</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-8">
+        <h2>8. İsteğe bağlı gizlilik katmanları ve dürüst sınırları</h2>
+        <p>Uygulama, temel şifrelemenin ötesinde korumalar sunar. Her biri, <strong>korumadığı</strong> şeylerle birlikte açıklanmıştır.</p>
+        <p><strong>Gizli kasa.</strong> Görünür bir giriş noktası olmayan, isteğe bağlı ayrı bir şifreli kasa; korunan içeriğin <em>varlığının</em> dahi kanıtlanamaması gereken bir tehdit modeli için tasarlanmıştır. Kendi ifadesinin sıradan yazma alanına yazılmasıyla açılır.</p>
+        <p><strong>Yem katmanları.</strong> Her biri farklı bir not kümesini açan, en fazla iki ek ifade; baskı/zorlama senaryoları içindir. Bir yem katmanı, üst katmanın anahtarları matematiksel olarak ondan türetilemediği için hiçbir zaman üst katmana erişemez.</p>
+        <p><strong>Not kilidi.</strong> Tek bir paylaşılan parola veya desenle, tek tek notlar üzerinde görünür bir kilit; kilidi zaten açık bir cihazda gelişigüzel bakışlara karşı korur.</p>
+        <p><strong>Ekran koruması.</strong> İçerik türüne göre yapılandırılabilen ekran görüntüsü, ekran kaydı ve uygulama değiştirici önizlemesi engelleme.</p>
+
+        <h3>Bunların korumadıkları</h3>
+        <p>Pazarlamanın aksini ima etmesine izin vermek yerine açıkça belirtiyoruz:</p>
+        <ul>
+          <li><strong>Ele geçirilmiş bir cihaz.</strong> Kötü amaçlı yazılım, casus yazılım, root'lu/jailbreak'li bir cihaz veya cihazınız açıkken ifadenize de sahip olan bir saldırgan tüm katmanları etkisiz kılar. Şifreleme, veriyi diskte korur; başkasının kontrolüne geçmiş bir makineyi değil.</li>
+          <li><strong>Üstveri.</strong> Senkronizasyon sağlayıcıları ve ağı izleyenler, içerik şifreli olsa da dosya boyutlarını, sayılarını ve zamanlamayı görebilir.</li>
+          <li><strong>Adli inceleme.</strong> Tasarım bariz izler bırakmaktan kaçınır, ancak cihazınızın, dosya sisteminin, yedeklerinin, belleğinin veya aşınma dengelemeli depolamasının kararlı bir adli incelemesinin ek veri varlığını çıkarsayamayacağına dair <strong>hiçbir garanti vermiyoruz.</strong> İnkâr edilebilirlik bir tasarım hedefidir, matematiksel bir vaat değil.</li>
+          <li><strong>iOS ekran görüntüleri.</strong> Apple, bir uygulamanın ekran görüntüsünü engellemesine hiçbir yol sunmaz; iOS'ta yalnızca uygulama değiştirici önizlemesi korunabilir. Uygulama bunu aksini ima etmek yerine size açıkça söyler.</li>
+          <li><strong>Kasanın dışındaki her şey.</strong> Dışa aktardığınız dosyalar, aldığınız ekran görüntüleri, panoya kopyaladığınız metin ve işletim sistemi düzeyindeki dikte/sesli okuma uygulamanın kontrolü dışındadır.</li>
+          <li><strong>Hukuki zorlama.</strong> Bkz. Kullanım Şartları §7.</li>
+        </ul>
+        <p>Hiçbir yazılım kusursuz güvenlik vaat edemez. Uygulama özenle geliştirilmiştir ve kodu incelemeye açıktır, ancak hiçbir garanti verilmeksizin sunulur (bkz. Kullanım Şartları).</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-9">
+        <h2>9. Çocuklar</h2>
+        <p>Myth Notch çocuklara yönelik değildir ve kimseden veri toplamaz. <strong>13 yaş ve üzeri</strong> (yerel hukukun dijital rıza yaşını 16 olarak belirlediği yerlerde — AEA'nın bazı ülkeleri dahil — <strong>16 yaş ve üzeri</strong>) kullanıcılar içindir. Bu yaşın altındaysanız uygulamayı yalnızca ebeveyn veya vasi katılımıyla kullanın.</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-10">
+        <h2>10. Veri koruma haklarınız</h2>
+        <p>Elimizde veriniz bulunmadığından, klasik haklar talep yoluyla değil yapısal olarak karşılanır:</p>
+        <table>
+          <thead><tr><th>Hak (KVKK m. 11 / GDPR / CCPA-CPRA)</th><th>Nasıl karşılanıyor</th></tr></thead>
+          <tbody>
+            <tr><td>Bilgi edinme / erişim</td><td>Verileriniz her an sizin elinizdedir.</td></tr>
+            <tr><td>Düzeltme</td><td>Notu doğrudan düzenleyin.</td></tr>
+            <tr><td>Silme ("unutulma hakkı")</td><td>Notları silin ya da uygulamayı kaldırın / kasa klasörünü silin.</td></tr>
+            <tr><td>Taşınabilirlik</td><td><code>.mythbak</code> arşivi ya da Markdown/PDF dışa aktarımı.</td></tr>
+            <tr><td>İşlemeyi kısıtlama ve itiraz</td><td>İsteğe bağlı her özelliği istediğiniz an kapatın; uygulama tamamen çevrimdışı çalışır.</td></tr>
+            <tr><td>Satış/paylaşımdan çıkma</td><td>Uygulanamaz — hiçbir şey satmıyor ve paylaşmıyoruz. <strong>Kişisel bilgi satmıyoruz ve önceki 12 ayda da satmadık.</strong></td></tr>
+            <tr><td>Ayrımcılık yasağı</td><td>Uygulama herkes için aynıdır; hesap veya kademe yoktur.</td></tr>
+            <tr><td>Otomatik karar verme / profilleme</td><td>Hiç yapılmıyor.</td></tr>
+          </tbody>
+        </table>
+        <p>Bize e-posta yazarsanız (§12) ve o yazışmanın silinmesini isterseniz, talebiniz üzerine sileriz.</p>
+        <p>Bir denetim makamına şikâyette bulunma hakkınız vardır — Türkiye'de <strong>Kişisel Verileri Koruma Kurumu (KVKK)</strong>, AEA'da kendi ülkenizin veri koruma otoritesi.</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-11">
+        <h2>11. Yurt dışı aktarım, ihlaller ve resmî talepler</h2>
+        <ul>
+          <li><strong>Aktarım.</strong> Sunucu işletmiyor ve yurt dışına veri aktarmıyoruz. Google Drive senkronizasyonunu açarsanız Google, şifreli verinizi kendi belirlediği ülkelerde, kendi şartları kapsamında saklayabilir.</li>
+          <li><strong>İhlaller.</strong> Elimizde kişisel veri bulunmadığından, sistemlerimize yönelik bir ihlal notlarınızı ifşa edemez. Kullanıcı verisini açığa çıkarabilecek bir güvenlik açığından haberdar olursak, bunu projenin herkese açık deposunda duyurur, düzeltme yayımlar ve mümkün olan yerlerde uygulama içinden veya mağaza sayfasından etkilenen kullanıcıları bilgilendiririz.</li>
+          <li><strong>Kolluk/adli talepler.</strong> Notlarınızı, anahtarlarınızı veya kimliğinizi hiçbir hukuki talebe karşılık üretemeyiz; çünkü bizde yoktur. Üçüncü taraf bir sağlayıcıya senkronize etmeyi seçtiğiniz verilere ilişkin talepler o sağlayıcıya yöneltilmelidir.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="p-tr-12">
+        <h2>12. Bizimle iletişime geçerseniz</h2>
+        <p>Destek için veya bir hakkınızı kullanmak üzere e-posta gönderirseniz, göndermeyi seçtiğiniz her şeyi alırız: e-posta adresiniz, mesajınız ve eklediğiniz ayrıntılar veya ekran görüntüleri. Bunu <strong>yalnızca</strong> size yanıt vermek için kullanır, yalnızca bu amaç için gereken süre boyunca saklar, pazarlama amacıyla kullanmaz ve kimseyle paylaşmayız. Lütfen bize <strong>hiçbir zaman</strong> kurtarma ifadenizi, bir parolanızı, Giriş Anahtarı ekranınızın görüntüsünü veya notlarınızın şifresiz bir dışa aktarımını göndermeyin — bunlara ihtiyacımız yoktur, kullanamayız ve gerçek bir destek talebi bunları asla istemez.</p>
+        <p>Hukuki dayanak: yazışmalara yanıt vermeye ilişkin meşru menfaat (GDPR m. 6(1)(f); KVKK m. 5/2-f).</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-13">
+        <h2>13. Açık kaynak ve doğrulanabilirlik</h2>
+        <p>Myth Notch'un kaynak kodu <strong data-fill="REPOSITORY_URL">{{REPOSITORY_URL}}</strong> adresinde <strong data-fill="LICENSE_NAME">{{LICENSE_NAME}}</strong> lisansıyla yayımlanmıştır. Bu politikadaki her iddia — telemetri yok, analitik yok, diske yazmadan önce şifreleme, Google Drive'dan istenen tam yetki kapsamı — bu belgeye güvenmek yerine kod okunarak doğrulanabilir. Bağımsız güvenlik incelemesini memnuniyetle karşılarız; bulgularınızı <span data-fill="CONTACT_EMAIL">{{CONTACT_EMAIL}}</span> adresine bildirin (ayrıca bkz. <code data-fill="SECURITY_CONTACT_OR_FILE">{{SECURITY_CONTACT_OR_FILE}}</code>).</p>
+        <p>Uygulama, kendi lisansları altında üçüncü taraf açık kaynak bileşenler barındırır (Flutter çerçevesi, AppFlowy editörü ve Lora ile Hanken Grotesk yazı tipleri dahil); tam liste uygulama içinde Ayarlar → Hakkında → Lisanslar altındadır.</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-14">
+        <h2>14. Bu politikadaki değişiklikler</h2>
+        <p>Uygulamanın özellikleri değiştiğinde veya hukuk gerektirdiğinde bu politikayı güncelleyebiliriz. Baştaki "Son güncelleme" tarihi her zaman güncel sürümü yansıtır ve önceki sürümler projenin herkese açık sürüm geçmişinde kalır. Verilerin işlenişini <strong>esaslı</strong> biçimde etkileyen her değişiklikte, değişiklik yürürlüğe girmeden önce uygulama içinde bir bildirim gösteririz. Değişiklikten sonra kullanmaya devam etmeniz, güncel politikayı kabul ettiğiniz anlamına gelir.</p>
+      </section>
+
+      <section class="legal-section" id="p-tr-15">
+        <h2>15. İletişim</h2>
+        <div class="contact-card">
+          <div><strong data-fill="PUBLISHER_NAME">{{PUBLISHER_NAME}}</strong></div>
+          <div>E-posta: <span data-fill="CONTACT_EMAIL">{{CONTACT_EMAIL}}</span></div>
+          <div data-fill="POSTAL_ADDRESS_IF_REQUIRED"></div>
+          <div>Politika adresi: <span data-fill="POLICY_URL">{{POLICY_URL}}</span></div>
+        </div>
+      </section>
+
+      <section class="legal-section" id="p-tr-A">
+        <h2>Ek A — Mağaza beyanları özeti</h2>
+        <p>Bu politikanın uygulama mağazalarında yapılan beyanlarla tutarlı kalması için verilmiştir.</p>
+        <p><strong>Google Play Veri Güvenliği:</strong></p>
+        <ul>
+          <li>Toplanan veri: <strong>Yok.</strong></li>
+          <li>Paylaşılan veri: <strong>Yok.</strong></li>
+          <li>Geliştirici tarafından geçici olarak işlenen veri: yok.</li>
+          <li>Aktarımda şifreleme: evet, isteğe bağlı tüm senkronizasyon özellikleri için (WebDAV/Drive için HTTPS; yerel ağ senkronizasyonu dahil tüm yükler için uygulama katmanında AES-256-GCM).</li>
+          <li>Diskte şifreleme: evet, AES-256-GCM.</li>
+          <li>Kullanıcı veri silme talebinde bulunabilir mi: evet — veriler yereldir, uygulama içinden veya uygulamayı kaldırarak silinebilir; silinecek bir hesap yoktur.</li>
+          <li>Play Aileler Politikası taahhüdü: uygulanamaz (çocuklara yönelik değildir).</li>
+        </ul>
+        <p><strong>Apple App Store gizlilik etiketi:</strong> <strong>Veri Toplanmıyor (Data Not Collected).</strong></p>
+        <p><strong>Kullanıcı yönlendirmeli isteğe bağlı iletim</strong> (yukarıda §6'da açıklanmıştır): kullanıcı WebDAV, Google Drive veya yerel ağ senkronizasyonunu açtığında şifreli not verisi, kullanıcının seçtiği bir hedefe iletilir. Bu, geliştirici tarafından toplama değil, kullanıcının kendi seçtiği üçüncü tarafa kullanıcı tarafından başlatılan bir veri aktarımıdır.</p>
+      </section>
+
+      <footer class="doc-footer">
+        <span>Myth Notch — Gizlilik Politikası</span>
+        <span>Yürürlük: <span data-fill="EFFECTIVE_DATE">{{EFFECTIVE_DATE}}</span></span>
+      </footer>
+    </article>
+
+    <!-- =========================================================
+         TERMS OF SERVICE — ENGLISH
+         ========================================================= -->
+    <article class="doc-content" data-doc="terms" data-lang="en">
+      <div class="doc-hero">
+        <h1>Terms of Service</h1>
+        <p class="tagline">Myth Notch</p>
+        <div class="callout-top">
+          <strong>Please read section 5 (no recovery), section 7 (hidden vault and coercion), section 11 (no warranty) and section 12 (limitation of liability) carefully.</strong> They limit our obligations to you and describe risks that can result in the permanent loss of your data.
+        </div>
+        <hr>
+      </div>
+
+      <section class="legal-section" id="t-en-1">
+        <h2>1. Agreement</h2>
+        <p>These Terms of Service ("Terms") are a legal agreement between you and <strong data-fill="PUBLISHER_NAME">{{PUBLISHER_NAME}}</strong> governing your use of the <strong>Myth Notch</strong> application, including all builds, updates, pre-release and beta versions and accompanying documentation (the "App").</p>
+        <p>By installing or using the App, you accept these Terms. If you do not accept them, do not install or use the App; if you have already installed it, uninstall it.</p>
+        <p>Our <a href="#" data-fill-href="POLICY_URL" data-i18n-ui="privacyLink">Privacy Policy</a> is incorporated into these Terms by reference.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-2">
+        <h2>2. What the App is — and what it is not</h2>
+        <p>The App is <strong>software that runs entirely on your device</strong>. It is <strong>not an online service.</strong></p>
+        <p>Consequently:</p>
+        <ul>
+          <li>There is <strong>no account, no registration, no login server and no user database.</strong></li>
+          <li>We operate <strong>no servers</strong> in connection with the App, and store <strong>none</strong> of your data.</li>
+          <li>We provide <strong>no hosting, no backup service, no storage, and no uptime, availability or service-level commitment of any kind.</strong></li>
+          <li>All optional sync features connect to destinations <strong>you</strong> choose and configure (your own WebDAV server, your own Google Drive, your own devices on your own network). We are not a party to those arrangements.</li>
+        </ul>
+        <p>Nothing in these Terms creates an obligation on us to preserve, restore, retrieve or access your data. We are technically incapable of doing so (§5).</p>
+      </section>
+
+      <section class="legal-section" id="t-en-3">
+        <h2>3. Licence</h2>
+        <p>The App's source code is made available under the <strong data-fill="LICENSE_NAME">{{LICENSE_NAME}}</strong> licence at <span data-fill="REPOSITORY_URL">{{REPOSITORY_URL}}</span>. That licence governs your rights to the source code and takes precedence over this section for those rights.</p>
+        <p>For binary distributions obtained from an app store, we grant you a personal, worldwide, non-exclusive, non-transferable, revocable licence to install and use the App on devices you own or control, for personal or internal business purposes, subject to these Terms and to the rules of the store you obtained it from.</p>
+        <p>You may not:</p>
+        <ul>
+          <li>remove, obscure or alter any copyright, trademark or licence notice;</li>
+          <li>use the name "Myth", "Myth Notch" or our logos to identify a modified build in a way that suggests it is the official one, or that could confuse users about its origin (trademark rights are not granted by the source-code licence);</li>
+          <li>represent a modified build as endorsed by, supported by or originating from us.</li>
+        </ul>
+        <p>We retain all rights not expressly granted. Third-party components bundled with the App remain subject to their own licences, listed in-app under Settings → About → Licences.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-4">
+        <h2>4. Eligibility and your responsibilities</h2>
+        <p>You must be at least <strong>13 years old</strong> (or <strong>16</strong>, where local law sets that as the age of digital consent) to use the App. If you are under the age of majority in your jurisdiction, you may use the App only with the consent and involvement of a parent or guardian.</p>
+        <p>You are solely responsible for:</p>
+        <ol>
+          <li><strong>The security of your device</strong> — its lock screen, OS updates, and its freedom from malware. The App's encryption cannot protect data on a device that is already compromised.</li>
+          <li><strong>The safekeeping of your recovery phrase</strong>, hidden-vault phrases, recovery codes, and note-lock credentials.</li>
+          <li><strong>Keeping your own backups.</strong> Use the App's <code>.mythbak</code> export, and keep copies somewhere you control. Do not rely on a single device.</li>
+          <li><strong>The lawfulness of what you store and do</strong> with the App, in your own jurisdiction.</li>
+          <li><strong>Any third-party service you connect</strong> — including the terms, costs, availability and security of your WebDAV host or your Google account.</li>
+          <li><strong>Where you send exported data.</strong> Markdown and PDF exports, clipboard copies and share-sheet output leave the App's encryption behind, and you control where they go.</li>
+        </ol>
+      </section>
+
+      <section class="legal-section" id="t-en-5">
+        <h2>5. No recovery. Read this before you begin.</h2>
+        <p>The App is designed so that <strong>only you</strong> can decrypt your data. There is no key escrow, no backdoor, no master key, no password reset, and no support procedure that can recover your notes.</p>
+        <p><strong>This means, without exception:</strong></p>
+        <ul>
+          <li><strong>If you lose or forget your 12-word recovery phrase, your entire vault becomes permanently unreadable.</strong> No amount of technical assistance, from us or anyone, can restore it.</li>
+          <li><strong>If you lose both a hidden vault's (or a decoy layer's) phrase and its one-time recovery code, that layer's contents are permanently unreadable.</strong> Each layer is independent; losing one does not affect the others, and no other path exists.</li>
+          <li><strong>If you reset the note lock, every currently locked note's content is permanently destroyed.</strong> The App warns you in explicit language before allowing this; the warning is accurate.</li>
+          <li><strong>If you uninstall the App or your device is lost, damaged, wiped or stolen without a backup, your data is gone.</strong> There is no server-side copy.</li>
+          <li>Entering a <em>different</em> vault's phrase on a device that already holds notes re-encrypts the local content to the new identity. The App requires a two-step confirmation for this; make sure you understand it before confirming.</li>
+        </ul>
+        <p>You accept this design as a condition of using the App. It is the direct consequence of the privacy guarantee the App is built on, and it cannot be waived for individual users.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-6">
+        <h2>6. Acceptable use</h2>
+        <p>You agree not to use the App:</p>
+        <ul>
+          <li>to store, transmit or conceal material that is illegal in your jurisdiction, including child sexual abuse material, content that incites violence or terrorism, or material stored in furtherance of a serious crime;</li>
+          <li>to infringe another person's intellectual property, privacy or confidentiality rights;</li>
+          <li>to gain unauthorised access to any device, network or account, including via the sync features;</li>
+          <li>to circumvent any technical protection in the App, or to attempt to attack, overload or exploit another person's device through its LAN sync protocol;</li>
+          <li>in violation of any applicable export-control or sanctions law (§8).</li>
+        </ul>
+        <p>The App is a general-purpose tool. We do not and cannot monitor its use — we have no visibility into it whatsoever — and therefore cannot police these rules. <strong>Responsibility for compliance rests entirely with you.</strong> We reserve the right to decline support and, where we have any means to do so, to withdraw distribution, in cases of misuse of which we become aware.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-7">
+        <h2>7. Special terms: the hidden vault, decoy layers, and coercion</h2>
+        <p>The App offers a <strong>hidden vault</strong> and up to two <strong>decoy layers</strong> — separate encrypted areas designed so that a user compelled to unlock the App can reveal one layer without revealing another. These are provided for legitimate privacy protection. The following terms apply specifically to them, and you accept them by enabling those features.</p>
+        <ol>
+          <li><strong>No legal advice.</strong> Nothing in the App or its documentation is legal advice. Whether it is lawful to conceal the existence of data, and what happens if you do, depends entirely on your jurisdiction and circumstances.</li>
+          <li><strong>Key-disclosure and obstruction laws exist.</strong> In some jurisdictions, failing to disclose a decryption key or the existence of encrypted data when lawfully ordered to do so is itself a <strong>criminal offence</strong>, and providing a decoy in that situation may constitute obstruction of justice, perjury or a comparable offence, carrying penalties independent of anything you were concealing. <strong>You are solely responsible for knowing and complying with the law that applies to you.</strong> We accept no liability for any legal consequence, of any kind, arising from your use of these features.</li>
+          <li><strong>Deniability is a design goal, not a guarantee.</strong> We make <strong>no warranty</strong> that the existence of a hidden vault or decoy layer cannot be detected by forensic analysis of your device, its storage medium, its memory, its backups, network observation, or by any future technique. Do not rely on these features where detection would cause you serious harm.</li>
+          <li><strong>The one cryptographic guarantee we do make</strong> is narrow and stated exactly: a decoy layer's phrase cannot be used to derive the keys of any higher layer, because those keys are not mathematically derivable in that direction. That property concerns cryptography only. It says nothing about behavioural, forensic, physical or legal exposure.</li>
+          <li><strong>Not designed for life-safety reliance.</strong> These features must not be treated as adequate protection in a situation where discovery would endanger life, liberty or physical safety. If you are in such a situation, seek qualified professional and legal help; do not rely on a consumer application.</li>
+          <li><strong>Setup is one-time and irreversible in effect.</strong> Hidden-vault setup is protected behind a device-ownership check. Once configured, the constraints in §5 apply to each layer independently.</li>
+        </ol>
+      </section>
+
+      <section class="legal-section" id="t-en-8">
+        <h2>8. Encryption and export control</h2>
+        <p>The App contains and uses strong cryptography (AES-256-GCM, Argon2id, X25519, HKDF-SHA256). The import, possession, use, or re-export of encryption software may be restricted or prohibited in some countries.</p>
+        <p><strong>You are responsible for complying with the laws of your jurisdiction</strong> regarding encryption software before downloading, using or exporting the App. You represent that you are not located in, and are not a national or resident of, any country subject to comprehensive sanctions applicable to us or to the store from which you obtained the App, and that you are not on any restricted-party list.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-9">
+        <h2>9. Updates, changes and discontinuation</h2>
+        <p>We may release updates, change or remove features, or <strong>stop developing and distributing the App entirely</strong>, at any time and without liability to you. We are under <strong>no obligation</strong> to provide updates, bug fixes, security patches, or support.</p>
+        <p>Because the App runs locally, an unmaintained version continues to work on your device, and your data remains readable with your recovery phrase and the <code>.mythbak</code> export as long as a compatible build exists. We nevertheless recommend keeping independent exports of anything you cannot afford to lose.</p>
+        <p>Pre-release and beta builds may be unstable and may lose or corrupt data. Do not keep irreplaceable content solely in a beta build.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-10">
+        <h2>10. Third-party services</h2>
+        <p>If you enable WebDAV, Google Drive or any other third-party integration, you contract <strong>directly</strong> with that provider. Their terms and privacy policy govern that relationship. We are not responsible for their availability, security, pricing, data handling, or for any loss, corruption or disclosure of data occurring on or through their systems. Google Drive integration is subject to Google's terms and to Google API Services User Data Policy; the App requests only the Drive App Data scope.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-11">
+        <h2>11. Disclaimer of warranties</h2>
+        <p><strong>The App is provided "AS IS" and "AS AVAILABLE", without warranty of any kind.</strong> To the maximum extent permitted by applicable law, we disclaim all warranties, express, implied or statutory, including any implied warranties of merchantability, fitness for a particular purpose, title, non-infringement, accuracy, and any warranty arising from course of dealing or usage of trade.</p>
+        <p>Without limiting the above, we do not warrant that:</p>
+        <ul>
+          <li>the App will be uninterrupted, error-free, or free of defects or vulnerabilities;</li>
+          <li>its encryption is unbreakable, now or in the future, including against future cryptanalytic or quantum advances;</li>
+          <li>data will not be lost, corrupted or made unreadable;</li>
+          <li>sync will complete correctly, in order, or without conflicts;</li>
+          <li>the App is suitable for storing information whose loss or disclosure would be materially harmful.</li>
+        </ul>
+        <p><strong>The App is not certified for, and must not be relied upon in, any context where failure could result in death, personal injury, or severe financial, legal or environmental harm</strong> — including medical, legal-evidentiary, financial-record, safety-critical or regulatory-compliance use.</p>
+        <p>Some jurisdictions do not allow the exclusion of certain warranties; in those jurisdictions the exclusions above apply only to the extent permitted, and you may have additional rights.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-12">
+        <h2>12. Limitation of liability</h2>
+        <p>To the maximum extent permitted by applicable law:</p>
+        <ol>
+          <li>We shall not be liable for any <strong>indirect, incidental, special, consequential, exemplary or punitive damages</strong>, or for any <strong>loss of data, loss of profits, loss of business, loss of goodwill, or cost of substitute goods or services</strong>, arising out of or relating to the App or these Terms, on any theory of liability (contract, tort, negligence, strict liability, statute or otherwise), even if we have been advised of the possibility of such damages.</li>
+          <li>Our total aggregate liability arising out of or relating to the App or these Terms shall not exceed the <strong>greater of (a) the amount you actually paid us for the App in the twelve months preceding the event giving rise to the claim, or (b) <span data-fill="LIABILITY_CAP">{{LIABILITY_CAP}}</span></strong>. The App is provided free of charge; in most cases this amount is zero.</li>
+          <li><strong>These limitations apply in particular to the loss of a recovery phrase or credential, to any consequence of §5, and to the exposure or detection of data protected by the features described in §7.</strong></li>
+        </ol>
+        <p><strong>Nothing in these Terms excludes or limits our liability for:</strong> death or personal injury caused by our negligence; fraud or fraudulent misrepresentation; gross negligence or wilful misconduct; or any other liability that cannot lawfully be excluded or limited. If you are a consumer, your mandatory statutory rights — including under the consumer-protection law of your country of residence and, in Türkiye, under Law No. 6502 on the Protection of Consumers — are unaffected by these Terms, and the limitations above apply only to the extent that law permits.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-13">
+        <h2>13. Indemnity</h2>
+        <p>To the extent permitted by law, you agree to indemnify and hold harmless <strong data-fill="PUBLISHER_NAME">{{PUBLISHER_NAME}}</strong> and its contributors from any claim, demand, loss, liability, or expense (including reasonable legal fees) arising from <strong>your</strong> use of the App in breach of these Terms or in violation of any law or third-party right. This does not apply to claims arising from our own gross negligence or wilful misconduct, nor to consumers to the extent such an obligation is unenforceable under applicable consumer law.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-14">
+        <h2>14. Termination</h2>
+        <p>These Terms apply for as long as you use the App. You may terminate at any time by uninstalling it. The licence in §3 terminates automatically if you materially breach these Terms. Sections 5, 6, 7, 8, 10, 11, 12, 13 and 15 survive termination.</p>
+      </section>
+
+      <section class="legal-section" id="t-en-15">
+        <h2>15. General</h2>
+        <p><strong>Changes.</strong> We may amend these Terms when the App or the law changes. The "Last updated" date reflects the current version, and prior versions remain in the project's public history. Material changes will be signalled in the App or in the release notes before they take effect. Continued use after a change constitutes acceptance; if you do not accept, stop using the App.</p>
+        <p><strong>Governing law and venue.</strong> These Terms are governed by the laws of <strong data-fill="GOVERNING_LAW">{{GOVERNING_LAW}}</strong>, without regard to conflict-of-laws rules, and the courts and enforcement offices of <strong data-fill="VENUE">{{VENUE}}</strong> shall have jurisdiction. <strong>If you are a consumer,</strong> this does not deprive you of the protection of the mandatory law of your country of habitual residence, nor of the right to bring proceedings before the courts (or, in Türkiye, the consumer arbitration committees — <em>tüketici hakem heyetleri</em>) competent there.</p>
+        <p><strong>App-store terms.</strong> If you obtained the App from Google Play or the Apple App Store, that store's terms also apply. For iOS: these Terms are between you and us, not Apple; Apple has no obligation to provide support or maintenance for the App; in the event of a failure to conform to any applicable warranty, you may notify Apple for a refund of the purchase price (if any), and Apple has no other warranty obligation; we, not Apple, are responsible for addressing product-liability, legal-compliance and third-party intellectual-property claims relating to the App; and Apple and its subsidiaries are third-party beneficiaries of these Terms and may enforce them against you.</p>
+        <p><strong>Severability.</strong> If any provision is held unenforceable, it shall be modified to the minimum extent necessary to make it enforceable, or severed, and the remaining provisions continue in full force.</p>
+        <p><strong>No waiver.</strong> Our failure to enforce any provision is not a waiver of it.</p>
+        <p><strong>Assignment.</strong> You may not assign these Terms. We may assign them in connection with a transfer of the project, with notice in the repository or the store listing.</p>
+        <p><strong>Entire agreement.</strong> These Terms, together with the Privacy Policy and the applicable source-code licence, constitute the entire agreement between you and us regarding the App, and supersede any prior statements, including marketing material and store descriptions.</p>
+        <p><strong>Language.</strong> These Terms are published in English and Turkish. <span data-fill="LANGUAGE_PRECEDENCE_CLAUSE_EN">{{LANGUAGE_PRECEDENCE_CLAUSE_EN}}</span></p>
+      </section>
+
+      <section class="legal-section" id="t-en-16">
+        <h2>16. Contact</h2>
+        <div class="contact-card">
+          <div><strong data-fill="PUBLISHER_NAME">{{PUBLISHER_NAME}}</strong></div>
+          <div>Email: <span data-fill="CONTACT_EMAIL">{{CONTACT_EMAIL}}</span></div>
+          <div>Repository: <span data-fill="REPOSITORY_URL">{{REPOSITORY_URL}}</span></div>
+          <div data-fill="POSTAL_ADDRESS_IF_REQUIRED"></div>
+        </div>
+      </section>
+
+      <footer class="doc-footer">
+        <span>Myth Notch — Terms of Service</span>
+        <span>Effective <span data-fill="EFFECTIVE_DATE">{{EFFECTIVE_DATE}}</span></span>
+      </footer>
+    </article>
+
+    <!-- =========================================================
+         TERMS OF SERVICE — TURKISH
+         ========================================================= -->
+    <article class="doc-content" data-doc="terms" data-lang="tr">
+      <div class="doc-hero">
+        <h1>Kullanım Şartları</h1>
+        <p class="tagline">Myth Notch</p>
+        <div class="callout-top">
+          <strong>Lütfen 5. bölümü (kurtarma yoktur), 7. bölümü (gizli kasa ve zorlama), 11. bölümü (garanti verilmez) ve 12. bölümü (sorumluluk sınırı) dikkatle okuyun.</strong> Bu bölümler size karşı yükümlülüklerimizi sınırlar ve verilerinizin kalıcı kaybına yol açabilecek riskleri açıklar.
+        </div>
+        <hr>
+      </div>
+
+      <section class="legal-section" id="t-tr-1">
+        <h2>1. Sözleşme</h2>
+        <p>Bu Kullanım Şartları ("Şartlar"), <strong>Myth Notch</strong> uygulamasının — tüm yapıları, güncellemeleri, ön sürüm ve beta sürümleri ile beraberindeki belgeler dahil ("Uygulama") — kullanımınıza ilişkin olarak sizinle <strong data-fill="PUBLISHER_NAME">{{PUBLISHER_NAME}}</strong> arasındaki hukuki sözleşmedir.</p>
+        <p>Uygulamayı kurarak veya kullanarak bu Şartları kabul etmiş olursunuz. Kabul etmiyorsanız kurmayın ve kullanmayın; kurduysanız kaldırın.</p>
+        <p><a href="#" data-fill-href="POLICY_URL" data-i18n-ui="privacyLink">Gizlilik Politikamız</a> atıf yoluyla bu Şartların ayrılmaz parçasıdır.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-2">
+        <h2>2. Uygulama nedir — ve ne değildir</h2>
+        <p>Uygulama, <strong>tamamen kendi cihazınızda çalışan bir yazılımdır.</strong> <strong>Çevrimiçi bir hizmet değildir.</strong></p>
+        <p>Bunun sonucu olarak:</p>
+        <ul>
+          <li><strong>Hesap, kayıt, oturum açma sunucusu veya kullanıcı veritabanı yoktur.</strong></li>
+          <li>Uygulamayla bağlantılı olarak <strong>hiçbir sunucu işletmiyoruz</strong> ve verilerinizin <strong>hiçbirini</strong> saklamıyoruz.</li>
+          <li><strong>Barındırma, yedekleme hizmeti, depolama sunmuyoruz; hiçbir çalışma süresi, erişilebilirlik veya hizmet seviyesi taahhüdünde bulunmuyoruz.</strong></li>
+          <li>İsteğe bağlı tüm senkronizasyon özellikleri, <strong>sizin</strong> seçip yapılandırdığınız hedeflere bağlanır (kendi WebDAV sunucunuz, kendi Google Drive'ınız, kendi ağınızdaki kendi cihazlarınız). Bu ilişkilerin tarafı değiliz.</li>
+        </ul>
+        <p>Bu Şartlarda, verilerinizi saklamamızı, geri yüklememizi, kurtarmamızı veya bunlara erişmemizi gerektiren hiçbir yükümlülük doğmaz. Zaten teknik olarak buna imkânımız yoktur (§5).</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-3">
+        <h2>3. Lisans</h2>
+        <p>Uygulamanın kaynak kodu <span data-fill="REPOSITORY_URL">{{REPOSITORY_URL}}</span> adresinde <strong data-fill="LICENSE_NAME">{{LICENSE_NAME}}</strong> lisansıyla sunulmaktadır. Kaynak koda ilişkin haklarınızı o lisans belirler ve bu haklar bakımından bu bölümün önüne geçer.</p>
+        <p>Uygulama mağazasından edinilen ikili (binary) dağıtımlar için size; sahip olduğunuz veya kontrol ettiğiniz cihazlara kurup kişisel ya da kurum içi amaçlarla kullanmanız üzere, bu Şartlara ve edindiğiniz mağazanın kurallarına tabi, kişisel, dünya çapında, münhasır olmayan, devredilemez ve geri alınabilir bir lisans veriyoruz.</p>
+        <p>Şunları yapamazsınız:</p>
+        <ul>
+          <li>telif hakkı, marka veya lisans bildirimlerini kaldırmak, gizlemek veya değiştirmek;</li>
+          <li>"Myth", "Myth Notch" adını veya logolarımızı, değiştirilmiş bir yapının resmî sürüm olduğunu düşündürecek ya da kaynağı konusunda karışıklık yaratacak biçimde kullanmak (marka hakları kaynak kod lisansıyla verilmez);</li>
+          <li>değiştirilmiş bir yapıyı bizim onayımız, desteğimiz veya kaynağımızla üretilmiş gibi göstermek.</li>
+        </ul>
+        <p>Açıkça verilmeyen tüm haklar saklıdır. Uygulamayla birlikte gelen üçüncü taraf bileşenler kendi lisanslarına tabidir; liste uygulama içinde Ayarlar → Hakkında → Lisanslar altındadır.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-4">
+        <h2>4. Uygunluk ve sorumluluklarınız</h2>
+        <p>Uygulamayı kullanmak için en az <strong>13 yaşında</strong> (yerel hukukun dijital rıza yaşını 16 olarak belirlediği yerlerde <strong>16</strong>) olmalısınız. Bulunduğunuz ülkede reşit değilseniz, Uygulamayı yalnızca ebeveyn veya vasinizin rızası ve katılımıyla kullanabilirsiniz.</p>
+        <p>Aşağıdakilerden yalnızca siz sorumlusunuz:</p>
+        <ol>
+          <li><strong>Cihazınızın güvenliği</strong> — ekran kilidi, işletim sistemi güncellemeleri ve zararlı yazılımdan arınmışlığı. Uygulamanın şifrelemesi, zaten ele geçirilmiş bir cihazdaki veriyi koruyamaz.</li>
+          <li><strong>Kurtarma ifadenizin</strong>, gizli kasa ifadelerinizin, kurtarma kodlarınızın ve not kilidi bilgilerinizin güvenle saklanması.</li>
+          <li><strong>Kendi yedeklerinizi almak.</strong> Uygulamanın <code>.mythbak</code> dışa aktarımını kullanın ve kopyaları kendi kontrolünüzdeki bir yerde tutun. Tek bir cihaza güvenmeyin.</li>
+          <li><strong>Sakladığınız ve yaptığınız her şeyin, kendi ülkenizin hukukuna uygunluğu.</strong></li>
+          <li><strong>Bağladığınız her üçüncü taraf hizmet</strong> — WebDAV sağlayıcınızın veya Google hesabınızın şartları, ücretleri, erişilebilirliği ve güvenliği dahil.</li>
+          <li><strong>Dışa aktardığınız verinin nereye gittiği.</strong> Markdown ve PDF dışa aktarımları, pano kopyaları ve paylaşım sayfası çıktıları Uygulamanın şifrelemesinin dışına çıkar ve nereye gideceklerini siz belirlersiniz.</li>
+        </ol>
+      </section>
+
+      <section class="legal-section" id="t-tr-5">
+        <h2>5. Kurtarma yoktur. Başlamadan önce okuyun.</h2>
+        <p>Uygulama, verilerinizin şifresini <strong>yalnızca sizin</strong> çözebilmesi için tasarlanmıştır. Anahtar emaneti, arka kapı, ana anahtar, parola sıfırlama ve notlarınızı kurtarabilecek bir destek prosedürü yoktur.</p>
+        <p><strong>Bu, istisnasız şu anlama gelir:</strong></p>
+        <ul>
+          <li><strong>12 kelimelik kurtarma ifadenizi kaybeder veya unutursanız, kasanızın tamamı kalıcı olarak okunamaz hâle gelir.</strong> Ne bizden ne başkasından gelecek hiçbir teknik yardım bunu geri getiremez.</li>
+          <li><strong>Bir gizli kasanın (veya yem katmanının) hem ifadesini hem tek kullanımlık kurtarma kodunu kaybederseniz, o katmanın içeriği kalıcı olarak okunamaz.</strong> Her katman bağımsızdır; birini kaybetmek diğerlerini etkilemez ve başka bir yol yoktur.</li>
+          <li><strong>Not kilidini sıfırlarsanız, o an kilitli olan tüm notların içeriği kalıcı olarak yok olur.</strong> Uygulama buna izin vermeden önce açık bir dille uyarır; uyarı gerçektir.</li>
+          <li><strong>Uygulamayı kaldırırsanız veya cihazınız yedeksiz biçimde kaybolur, bozulur, silinir ya da çalınırsa verileriniz gitmiştir.</strong> Sunucu tarafında kopya yoktur.</li>
+          <li>Halihazırda not barındıran bir cihaza <em>başka</em> bir kasanın ifadesini girmek, yerel içeriği yeni kimliğe göre yeniden şifreler. Uygulama bunun için iki aşamalı onay ister; onaylamadan önce ne yaptığınızdan emin olun.</li>
+        </ul>
+        <p>Uygulamayı kullanmanın koşulu olarak bu tasarımı kabul etmiş olursunuz. Bu, Uygulamanın üzerine kurulu olduğu gizlilik güvencesinin doğrudan sonucudur ve tek tek kullanıcılar için esnetilemez.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-6">
+        <h2>6. Kabul edilebilir kullanım</h2>
+        <p>Uygulamayı şu amaçlarla kullanmamayı kabul edersiniz:</p>
+        <ul>
+          <li>bulunduğunuz ülkede hukuka aykırı olan materyali — çocukların cinsel istismarı içerikleri, şiddete veya teröre teşvik eden içerikler ya da ağır bir suçun işlenmesi amacıyla saklanan materyal dahil — saklamak, iletmek veya gizlemek;</li>
+          <li>başkasının fikrî mülkiyet, özel hayatın gizliliği veya sır saklama haklarını ihlal etmek;</li>
+          <li>senkronizasyon özellikleri dahil olmak üzere herhangi bir cihaza, ağa veya hesaba yetkisiz erişim sağlamak;</li>
+          <li>Uygulamadaki teknik korumaları aşmak ya da yerel ağ senkronizasyon protokolü üzerinden başkasının cihazına saldırmayı, onu aşırı yüklemeyi veya istismar etmeyi denemek;</li>
+          <li>yürürlükteki ihracat kontrolü veya yaptırım mevzuatını ihlal etmek (§8).</li>
+        </ul>
+        <p>Uygulama genel amaçlı bir araçtır. Kullanımını izlemiyoruz ve izleyemiyoruz — kullanıma dair hiçbir görünürlüğümüz yoktur — dolayısıyla bu kuralları denetleyemeyiz. <strong>Uyum sorumluluğu tümüyle size aittir.</strong> Haberdar olduğumuz kötüye kullanım hâllerinde desteği reddetme ve elimizde bir imkân varsa dağıtımı durdurma hakkımızı saklı tutarız.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-7">
+        <h2>7. Özel hükümler: gizli kasa, yem katmanları ve zorlama</h2>
+        <p>Uygulama, bir <strong>gizli kasa</strong> ve en fazla iki <strong>yem (decoy) katmanı</strong> sunar; bunlar, kilidi açmaya zorlanan bir kullanıcının bir katmanı açığa çıkarırken diğerini açığa çıkarmamasını sağlayacak biçimde tasarlanmıştır. Meşru gizlilik koruması amacıyla sunulmuşlardır. Aşağıdaki hükümler özellikle bu özellikler için geçerlidir ve bu özellikleri etkinleştirerek bunları kabul etmiş olursunuz.</p>
+        <ol>
+          <li><strong>Hukuki tavsiye değildir.</strong> Uygulamadaki veya belgelerindeki hiçbir ifade hukuki tavsiye niteliğinde değildir. Verinin varlığını gizlemenin hukuka uygun olup olmadığı ve bunun sonuçları, tamamen bulunduğunuz ülkeye ve somut koşullara bağlıdır.</li>
+          <li><strong>Anahtar açıklama ve adaleti engelleme suçları mevcuttur.</strong> Bazı ülkelerde, hukuka uygun bir emir üzerine şifre çözme anahtarını veya şifreli verinin varlığını açıklamamak başlı başına <strong>suçtur</strong>; böyle bir durumda yem sunmak da adaleti engelleme, yalan beyan veya benzeri bir suç oluşturabilir ve gizlediğiniz şeyden bağımsız yaptırımlar doğurabilir. <strong>Size uygulanan hukuku bilmek ve ona uymak yalnızca sizin sorumluluğunuzdadır.</strong> Bu özellikleri kullanmanızdan doğacak hiçbir hukuki sonuçtan sorumluluk kabul etmiyoruz.</li>
+          <li><strong>İnkâr edilebilirlik bir tasarım hedefidir, garanti değil.</strong> Gizli kasanın veya yem katmanının varlığının; cihazınızın, depolama biriminin, belleğin, yedeklerin adli analiziyle, ağ gözlemiyle veya gelecekteki herhangi bir teknikle tespit edilemeyeceğine dair <strong>hiçbir garanti vermiyoruz.</strong> Tespit edilmenin size ciddi zarar vereceği durumlarda bu özelliklere güvenmeyin.</li>
+          <li><strong>Verdiğimiz tek kriptografik güvence</strong> dardır ve tam olarak şudur: bir yem katmanının ifadesi, üst katmanların anahtarlarını türetmek için kullanılamaz; çünkü o anahtarlar bu yönde matematiksel olarak türetilebilir değildir. Bu özellik yalnızca kriptografiye ilişkindir. Davranışsal, adli, fiziksel veya hukuki maruziyet hakkında hiçbir şey söylemez.</li>
+          <li><strong>Can güvenliği için tasarlanmamıştır.</strong> Bu özellikler, keşfedilmenin hayatı, özgürlüğü veya fiziksel güvenliği tehlikeye atacağı bir durumda yeterli koruma sayılmamalıdır. Böyle bir durumdaysanız nitelikli profesyonel ve hukuki yardım alın; bir tüketici uygulamasına güvenmeyin.</li>
+          <li><strong>Kurulum tek seferliktir ve etkisi geri alınamaz.</strong> Gizli kasa kurulumu bir cihaz sahipliği doğrulamasının arkasındadır. Yapılandırıldıktan sonra §5'teki kısıtlar her katman için bağımsız olarak geçerlidir.</li>
+        </ol>
+      </section>
+
+      <section class="legal-section" id="t-tr-8">
+        <h2>8. Şifreleme ve ihracat kontrolü</h2>
+        <p>Uygulama güçlü kriptografi içerir ve kullanır (AES-256-GCM, Argon2id, X25519, HKDF-SHA256). Bazı ülkelerde şifreleme yazılımının ithali, bulundurulması, kullanımı veya yeniden ihracı kısıtlanmış ya da yasaklanmış olabilir.</p>
+        <p><strong>Uygulamayı indirmeden, kullanmadan veya ihraç etmeden önce, şifreleme yazılımına ilişkin olarak kendi ülkenizin hukukuna uymaktan siz sorumlusunuz.</strong> Bize veya Uygulamayı edindiğiniz mağazaya uygulanan kapsamlı yaptırımlara tabi bir ülkede bulunmadığınızı, o ülkenin vatandaşı veya mukimi olmadığınızı ve herhangi bir kısıtlı taraf listesinde yer almadığınızı beyan edersiniz.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-9">
+        <h2>9. Güncellemeler, değişiklikler ve sonlandırma</h2>
+        <p>Güncelleme yayımlayabilir, özellikleri değiştirebilir veya kaldırabilir ya da <strong>Uygulamayı geliştirmeyi ve dağıtmayı tümüyle bırakabiliriz</strong>; bunu istediğimiz zaman ve size karşı hiçbir sorumluluk doğmaksızın yapabiliriz. Güncelleme, hata düzeltmesi, güvenlik yaması veya destek sağlama <strong>yükümlülüğümüz yoktur.</strong></p>
+        <p>Uygulama yerel çalıştığı için, bakımı bırakılmış bir sürüm cihazınızda çalışmaya devam eder; uyumlu bir yapı bulunduğu sürece verileriniz kurtarma ifadeniz ve <code>.mythbak</code> dışa aktarımıyla okunabilir kalır. Yine de kaybetmeyi göze alamayacağınız her şeyin bağımsız dışa aktarımını saklamanızı öneririz.</p>
+        <p>Ön sürüm ve beta yapıları kararsız olabilir; veri kaybına veya bozulmasına yol açabilir. Yeri doldurulamaz içeriği yalnızca bir beta yapısında tutmayın.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-10">
+        <h2>10. Üçüncü taraf hizmetler</h2>
+        <p>WebDAV, Google Drive veya başka bir üçüncü taraf entegrasyonunu etkinleştirirseniz, o sağlayıcıyla <strong>doğrudan</strong> siz sözleşme kurmuş olursunuz. Bu ilişkiyi onların şartları ve gizlilik politikası yönetir. Onların erişilebilirliğinden, güvenliğinden, fiyatlandırmasından, veri işleyişinden ya da sistemlerinde veya üzerinden gerçekleşen herhangi bir veri kaybı, bozulması veya ifşasından sorumlu değiliz. Google Drive entegrasyonu Google'ın şartlarına ve Google API Hizmetleri Kullanıcı Verisi Politikası'na tabidir; Uygulama yalnızca Drive App Data yetkisini ister.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-11">
+        <h2>11. Garanti verilmemesi</h2>
+        <p><strong>Uygulama "OLDUĞU GİBİ" ve "MEVCUT HÂLİYLE" sunulur; hiçbir türde garanti verilmez.</strong> Yürürlükteki hukukun izin verdiği azami ölçüde; ticari elverişlilik, belirli bir amaca uygunluk, mülkiyet, ihlal etmeme, doğruluk ile ticari teamül veya taraflar arası uygulamadan doğan zımni garantiler dahil olmak üzere açık, zımni veya kanuni tüm garantileri reddediyoruz.</p>
+        <p>Yukarıdakini sınırlamaksızın, şunları taahhüt etmiyoruz:</p>
+        <ul>
+          <li>Uygulamanın kesintisiz, hatasız veya kusur/zafiyet içermeyecek şekilde çalışacağını;</li>
+          <li>şifrelemesinin bugün veya gelecekte — gelecekteki kriptanaliz ya da kuantum gelişmeleri dahil — kırılamaz olduğunu;</li>
+          <li>verilerin kaybolmayacağını, bozulmayacağını veya okunamaz hâle gelmeyeceğini;</li>
+          <li>senkronizasyonun doğru, sırasıyla veya çakışmasız tamamlanacağını;</li>
+          <li>Uygulamanın, kaybı ya da ifşası esaslı zarar doğuracak bilgileri saklamak için uygun olduğunu.</li>
+        </ul>
+        <p><strong>Uygulama; ölüm, yaralanma veya ağır malî, hukuki ya da çevresel zarara yol açabilecek hiçbir bağlam için sertifikalı değildir ve böyle bağlamlarda kullanılmamalıdır</strong> — tıbbi, hukuki delil niteliğinde, malî kayıt, güvenlik açısından kritik veya mevzuata uyum amaçlı kullanımlar dahil.</p>
+        <p>Bazı ülkeler belirli garantilerin dışlanmasına izin vermez; o ülkelerde yukarıdaki hükümler yalnızca izin verilen ölçüde uygulanır ve ek haklarınız olabilir.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-12">
+        <h2>12. Sorumluluğun sınırlandırılması</h2>
+        <p>Yürürlükteki hukukun izin verdiği azami ölçüde:</p>
+        <ol>
+          <li>Uygulamadan veya bu Şartlardan doğan ya da bunlarla ilgili <strong>dolaylı, arızi, özel, netice kabilinden, ibret verici veya cezai zararlardan</strong>, ayrıca <strong>veri kaybı, kâr kaybı, iş kaybı, itibar kaybı veya ikame mal/hizmet maliyetlerinden</strong> — hangi sorumluluk teorisine dayanırsa dayansın (sözleşme, haksız fiil, ihmal, kusursuz sorumluluk, kanun veya başka) ve böyle bir zarar olasılığı bize bildirilmiş olsa dahi — sorumlu değiliz.</li>
+          <li>Uygulamadan veya bu Şartlardan doğan toplam sorumluluğumuz, <strong>(a) talebe konu olayın öncesindeki on iki ay içinde Uygulama için bize fiilen ödediğiniz tutar ile (b) <span data-fill="LIABILITY_CAP">{{LIABILITY_CAP}}</span> tutarından yüksek olanını</strong> aşamaz. Uygulama ücretsizdir; çoğu durumda bu tutar sıfırdır.</li>
+          <li><strong>Bu sınırlamalar özellikle bir kurtarma ifadesinin veya kimlik bilgisinin kaybı, §5'in her türlü sonucu ve §7'de anlatılan özelliklerle korunan verinin ifşası ya da tespiti bakımından geçerlidir.</strong></li>
+        </ol>
+        <p><strong>Bu Şartlardaki hiçbir hüküm şunlara ilişkin sorumluluğumuzu dışlamaz veya sınırlamaz:</strong> ihmalimizden kaynaklanan ölüm veya bedensel zarar; hile veya hileli beyan; ağır ihmal veya kasıt; ya da hukuken dışlanması veya sınırlandırılması mümkün olmayan diğer her türlü sorumluluk. <strong>Tüketici iseniz</strong>, ikamet ettiğiniz ülkenin tüketici mevzuatından ve Türkiye bakımından <strong>6502 sayılı Tüketicinin Korunması Hakkında Kanun</strong>'dan doğan emredici kanuni haklarınız bu Şartlardan etkilenmez ve yukarıdaki sınırlamalar yalnızca o hukukun izin verdiği ölçüde uygulanır.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-13">
+        <h2>13. Tazmin</h2>
+        <p>Hukukun izin verdiği ölçüde, <strong>sizin</strong> Uygulamayı bu Şartlara aykırı biçimde ya da herhangi bir hukuk kuralını veya üçüncü kişi hakkını ihlal ederek kullanmanızdan doğan her türlü talep, zarar, sorumluluk veya masrafa (makul avukatlık ücretleri dahil) karşı <strong data-fill="PUBLISHER_NAME">{{PUBLISHER_NAME}}</strong>'i ve katkı sağlayanları tazmin etmeyi ve zarardan korumayı kabul edersiniz. Bu hüküm, kendi ağır ihmalimizden veya kastımızdan doğan taleplere ve tüketiciler bakımından ilgili tüketici mevzuatı uyarınca icra edilemez olduğu ölçüde uygulanmaz.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-14">
+        <h2>14. Sona erme</h2>
+        <p>Bu Şartlar, Uygulamayı kullandığınız sürece geçerlidir. Uygulamayı kaldırarak istediğiniz an sona erdirebilirsiniz. Bu Şartları esaslı biçimde ihlal etmeniz hâlinde §3'teki lisans kendiliğinden sona erer. 5, 6, 7, 8, 10, 11, 12, 13 ve 15. bölümler sona ermeden sonra da yürürlükte kalır.</p>
+      </section>
+
+      <section class="legal-section" id="t-tr-15">
+        <h2>15. Genel hükümler</h2>
+        <p><strong>Değişiklikler.</strong> Uygulama veya hukuk değiştiğinde bu Şartları değiştirebiliriz. "Son güncelleme" tarihi güncel sürümü yansıtır; önceki sürümler projenin herkese açık geçmişinde kalır. Esaslı değişiklikler yürürlüğe girmeden önce Uygulama içinde veya sürüm notlarında duyurulur. Değişiklikten sonra kullanmaya devam etmek kabul anlamına gelir; kabul etmiyorsanız kullanmayı bırakın.</p>
+        <p><strong>Uygulanacak hukuk ve yetki.</strong> Bu Şartlar, kanunlar ihtilafı kurallarına bakılmaksızın <strong data-fill="GOVERNING_LAW">{{GOVERNING_LAW}}</strong> hukukuna tabidir ve <strong data-fill="VENUE">{{VENUE}}</strong> mahkemeleri ile icra daireleri yetkilidir. <strong>Tüketici iseniz</strong> bu hüküm sizi, mutat meskeninizin bulunduğu ülkenin emredici hukukunun korumasından ve orada yetkili mahkemelere — Türkiye'de ayrıca <strong>tüketici hakem heyetlerine</strong> — başvurma hakkınızdan yoksun bırakmaz.</p>
+        <p><strong>Uygulama mağazası şartları.</strong> Uygulamayı Google Play veya Apple App Store'dan edindiyseniz o mağazanın şartları da geçerlidir. iOS için: bu Şartlar Apple ile değil, sizinle bizim aramızdadır; Apple'ın Uygulama için destek veya bakım sağlama yükümlülüğü yoktur; geçerli bir garantiye aykırılık hâlinde Apple'a bildirimde bulunarak (varsa) satın alma bedelinin iadesini talep edebilirsiniz ve Apple'ın başka bir garanti yükümlülüğü yoktur; Uygulamaya ilişkin ürün sorumluluğu, mevzuata uygunluk ve üçüncü kişi fikrî mülkiyet iddialarını ele almaktan Apple değil biz sorumluyuz; Apple ve bağlı kuruluşları bu Şartların üçüncü kişi lehtarıdır ve size karşı ileri sürebilir.</p>
+        <p><strong>Bölünebilirlik.</strong> Bir hükmün icra edilemez sayılması hâlinde, o hüküm icra edilebilir kılmak için gereken asgari ölçüde değiştirilir veya ayrılır; kalan hükümler tam olarak yürürlükte kalır.</p>
+        <p><strong>Feragat yokluğu.</strong> Bir hükmü uygulamamamız, o hükümden feragat ettiğimiz anlamına gelmez.</p>
+        <p><strong>Devir.</strong> Bu Şartları devredemezsiniz. Biz, projenin devri hâlinde, depoda veya mağaza sayfasında bildirimde bulunarak devredebiliriz.</p>
+        <p><strong>Sözleşmenin bütünlüğü.</strong> Bu Şartlar, Gizlilik Politikası ve ilgili kaynak kod lisansıyla birlikte, Uygulamaya ilişkin olarak sizinle bizim aramızdaki sözleşmenin tamamını oluşturur ve pazarlama materyalleri ile mağaza açıklamaları dahil önceki tüm beyanların yerine geçer.</p>
+        <p><strong>Dil.</strong> Bu Şartlar Türkçe ve İngilizce olarak yayımlanmıştır. <span data-fill="LANGUAGE_PRECEDENCE_CLAUSE_TR">{{LANGUAGE_PRECEDENCE_CLAUSE_TR}}</span></p>
+      </section>
+
+      <section class="legal-section" id="t-tr-16">
+        <h2>16. İletişim</h2>
+        <div class="contact-card">
+          <div><strong data-fill="PUBLISHER_NAME">{{PUBLISHER_NAME}}</strong></div>
+          <div>E-posta: <span data-fill="CONTACT_EMAIL">{{CONTACT_EMAIL}}</span></div>
+          <div>Depo: <span data-fill="REPOSITORY_URL">{{REPOSITORY_URL}}</span></div>
+          <div data-fill="POSTAL_ADDRESS_IF_REQUIRED"></div>
+        </div>
+      </section>
+
+      <footer class="doc-footer">
+        <span>Myth Notch — Kullanım Şartları</span>
+        <span>Yürürlük: <span data-fill="EFFECTIVE_DATE">{{EFFECTIVE_DATE}}</span></span>
+      </footer>
+    </article>
+
+  </main>
+</div>
+
+<!-- ============================================================
+     UI STRING TABLE (extensible — add a language key to extend)
+     ============================================================ -->
+<script>
+  const UI_STRINGS = {
+    en: {
+      tabPrivacy: "Privacy Policy",
+      tabTerms: "Terms of Service",
+      onThisPage: "On this page",
+      documentInfo: "Document info",
+      menu: "Contents",
+      metaEffective: "Effective date",
+      metaPublisher: "Publisher",
+      metaContact: "Contact",
+      metaLastUpdated: "Last updated",
+      privacyLink: "Privacy Policy",
+      backToTop: "Back to top"
+    },
+    tr: {
+      tabPrivacy: "Gizlilik Politikası",
+      tabTerms: "Kullanım Şartları",
+      onThisPage: "Bu sayfada",
+      documentInfo: "Belge bilgisi",
+      menu: "İçindekiler",
+      metaEffective: "Yürürlük tarihi",
+      metaPublisher: "Yayıncı",
+      metaContact: "İletişim",
+      metaLastUpdated: "Son güncelleme",
+      privacyLink: "Gizlilik Politikamız",
+      backToTop: "Başa dön"
+      // Add further keys here when adding a new language.
+    }
+  };
+
+  // ------------------------------------------------------------
+  // Fill {{TOKENS}} from CONFIG into every .doc-content block,
+  // then flag any that are still unresolved so it's obvious what
+  // still needs attention before publishing (see README.md §1/§4).
+  // ------------------------------------------------------------
+  function applyConfig(){
+    document.querySelectorAll('.doc-content').forEach(block => {
+      let html = block.innerHTML;
+      Object.keys(CONFIG).forEach(key => {
+        const token = '{{' + key + '}}';
+        if (html.indexOf(token) !== -1){
+          html = html.split(token).join(CONFIG[key] || '');
+        }
+      });
+      block.innerHTML = html;
+    });
+    // Flag anything still unresolved (empty CONFIG values collapse to "",
+    // so re-scan for the literal {{TOKEN}} pattern that remains).
+    document.querySelectorAll('[data-fill]').forEach(el => {
+      const key = el.getAttribute('data-fill');
+      const val = CONFIG[key];
+      if (!val){
+        el.innerHTML = '<mark class="todo-flag">{{' + key + '}}</mark>';
+      }
+    });
+    document.querySelectorAll('[data-fill-href]').forEach(el => {
+      const key = el.getAttribute('data-fill-href');
+      if (CONFIG[key]) el.setAttribute('href', CONFIG[key]);
+    });
+  }
+
+  // ------------------------------------------------------------
+  // Language + document switching
+  // ------------------------------------------------------------
+  const state = { doc: 'privacy', lang: 'en' };
+
+  function buildLangMenu(){
+    const menu = document.getElementById('langMenu');
+    menu.innerHTML = '';
+    LANGUAGES.forEach(l => {
+      const btn = document.createElement('button');
+      btn.className = 'lang-option';
+      btn.setAttribute('role','option');
+      btn.setAttribute('aria-checked', l.code === state.lang ? 'true' : 'false');
+      btn.innerHTML = '<span>' + l.label + ' <span class="native">' + (l.native !== l.label ? l.native : '') + '</span></span>' +
+        '<svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+      btn.addEventListener('click', () => { setLang(l.code); closeLangMenu(); });
+      menu.appendChild(btn);
+    });
+  }
+
+  function openLangMenu(){ document.getElementById('langMenu').classList.add('open'); document.getElementById('langBtn').setAttribute('aria-expanded','true'); }
+  function closeLangMenu(){ document.getElementById('langMenu').classList.remove('open'); document.getElementById('langBtn').setAttribute('aria-expanded','false'); }
+
+  function t(key){
+    const dict = UI_STRINGS[state.lang] || UI_STRINGS.en;
+    return dict[key] || (UI_STRINGS.en[key] || key);
+  }
+
+  function setDoc(doc){
+    state.doc = doc;
+    render();
+    document.querySelectorAll('.doc-tab').forEach(btn => {
+      btn.setAttribute('aria-selected', btn.dataset.doc === doc ? 'true' : 'false');
+    });
+  }
+
+  function setLang(lang){
+    state.lang = lang;
+    const meta = LANGUAGES.find(l => l.code === lang) || LANGUAGES[0];
+    document.getElementById('langBtnLabel').textContent = meta.native;
+    document.documentElement.setAttribute('lang', lang);
+    buildLangMenu();
+    render();
+  }
+
+  function render(){
+    // Show the matching content block
+    document.querySelectorAll('.doc-content').forEach(el => {
+      const match = el.dataset.doc === state.doc && el.dataset.lang === state.lang;
+      el.classList.toggle('active', match);
+    });
+    // Update static UI strings
+    document.querySelectorAll('[data-i18n-ui]').forEach(el => {
+      el.textContent = t(el.getAttribute('data-i18n-ui'));
+    });
+    buildTOC();
+    buildMeta();
+    // On mobile, collapse the sidebar after a selection
+    if (window.matchMedia('(max-width: 880px)').matches){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('menuToggle').setAttribute('aria-expanded','false');
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+
+  function buildTOC(){
+    const active = document.querySelector('.doc-content.active');
+    const toc = document.getElementById('toc');
+    toc.innerHTML = '';
+    if (!active) return;
+    active.querySelectorAll('section.legal-section > h2').forEach(h2 => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#' + h2.parentElement.id;
+      a.textContent = h2.textContent;
+      li.appendChild(a);
+      toc.appendChild(li);
+    });
+  }
+
+  function buildMeta(){
+    const card = document.getElementById('metaCard');
+    const eff = CONFIG.EFFECTIVE_DATE || '{{EFFECTIVE_DATE}}';
+    const pub = CONFIG.PUBLISHER_NAME || '{{PUBLISHER_NAME}}';
+    const contact = CONFIG.CONTACT_EMAIL || '{{CONTACT_EMAIL}}';
+    card.innerHTML =
+      '<div><b>' + t('metaEffective') + ':</b> ' + eff + '</div>' +
+      '<div><b>' + t('metaLastUpdated') + ':</b> ' + eff + '</div>' +
+      '<div><b>' + t('metaPublisher') + ':</b> ' + pub + '</div>' +
+      '<div><b>' + t('metaContact') + ':</b> ' + contact + '</div>';
+  }
+
+  // Highlight active TOC entry on scroll
+  function onScroll(){
+    const sections = document.querySelectorAll('.doc-content.active section.legal-section');
+    let currentId = null;
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top <= 110) currentId = sec.id;
+    });
+    document.querySelectorAll('#toc a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + currentId);
+    });
+  }
+
+  // ------------------------------------------------------------
+  // Wire up events
+  // ------------------------------------------------------------
+  document.addEventListener('DOMContentLoaded', () => {
+    applyConfig();
+
+    document.querySelectorAll('.doc-tab').forEach(btn => {
+      btn.addEventListener('click', () => setDoc(btn.dataset.doc));
+    });
+
+    const langBtn = document.getElementById('langBtn');
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = document.getElementById('langMenu').classList.contains('open');
+      if (open) closeLangMenu(); else openLangMenu();
+    });
+    document.addEventListener('click', (e) => {
+      if (!document.querySelector('.lang-switch').contains(e.target)) closeLangMenu();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLangMenu(); });
+
+    const menuToggle = document.getElementById('menuToggle');
+    menuToggle.addEventListener('click', () => {
+      const sidebar = document.getElementById('sidebar');
+      const willOpen = !sidebar.classList.contains('open');
+      sidebar.classList.toggle('open', willOpen);
+      menuToggle.setAttribute('aria-expanded', String(willOpen));
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    setLang('en'); // default language
+    setDoc('privacy');
+  });
+</script>
+
+</body>
+</html>
