@@ -497,6 +497,53 @@ a { color: inherit; }
   font-size: 13.5px;
   color: var(--amber-900);
 }
+/* ---------- SmartScreen note ---------- */
+
+.smartscreen-note {
+  margin-top: 14px;
+  border-radius: var(--radius-sm);
+  background: var(--amber-50);
+  border: 1px solid var(--border);
+}
+
+.smartscreen-note summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--amber-800);
+}
+
+.smartscreen-note summary::-webkit-details-marker { display: none; }
+
+.smartscreen-note summary svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--amber-800);
+  flex-shrink: 0;
+}
+
+.smartscreen-note summary .chevron {
+  margin-left: auto;
+  width: 14px;
+  height: 14px;
+  stroke: var(--amber-800);
+  transition: transform 0.15s ease;
+}
+
+.smartscreen-note[open] summary .chevron { transform: rotate(180deg); }
+
+.smartscreen-note p {
+  margin: 0;
+  padding: 0 16px 14px 38px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--amber-900);
+}
 
 /* ---------- Utility / i18n ---------- */
 
