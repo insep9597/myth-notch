@@ -37,7 +37,7 @@
    * 2. Static asset filenames (must match the GitHub Actions release job)
    * ------------------------------------------------------------------- */
   var ASSETS = {
-    windows: "myth_notch_windows_x64.zip",
+    windows: "MythNotch-Setup.exe",
     macos: "myth_notch_macos.zip",
     linux: "myth_notch_linux_x64.tar.gz",
     ios: "myth_notch_ios_archive.zip",
